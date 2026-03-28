@@ -8,25 +8,25 @@ app = Flask(__name__)
 # Radius of the Earth in miles
 R = 3958.8 
 
-# COMPLETE LIST OF ALL 66 SHELTERS
+# THE FULL LIST OF 66 SHELTERS
 SHELTERS = [
     # --- 🏠 GENERAL POPULATION (NO PETS) ---
     {"name": "Clearwater Fundamental Middle", "address": "1660 Palmetto St., Clearwater", "lat": 27.9658, "lon": -82.7711, "label": "🏠 No Pets"},
     {"name": "Belleair Elementary School", "address": "1156 Lakeview Rd., Clearwater", "lat": 27.9515, "lon": -82.7745, "label": "🏠 No Pets"},
     {"name": "Melrose Elementary School", "address": "1752 13th Ave. S., St. Petersburg", "lat": 27.7562, "lon": -82.6575, "label": "🏠 No Pets"},
-    {"name": "Campbell Park Elementary School", "address": "1051 7th Ave. S., St. Petersburg", "lat": 27.7645, "lon": -82.6492, "label": "🏠 No Pets"},
+    {"name": "Campbell Park Elementary", "address": "1051 7th Ave. S., St. Petersburg", "lat": 27.7645, "lon": -82.6492, "label": "🏠 No Pets"},
     {"name": "Palm Harbor Middle School", "address": "1800 Tampa Rd., Palm Harbor", "lat": 28.0772, "lon": -82.7425, "label": "🏠 No Pets"},
-    {"name": "New Heights Elementary School", "address": "3901 37th St. N., St. Petersburg", "lat": 27.8075, "lon": -82.6842, "label": "🏠 No Pets"},
-    {"name": "Fairmount Park Elementary School", "address": "575 41st St. S., St. Petersburg", "lat": 27.7441, "lon": -82.6892, "label": "🏠 No Pets"},
+    {"name": "New Heights Elementary", "address": "3901 37th St. N., St. Petersburg", "lat": 27.8075, "lon": -82.6842, "label": "🏠 No Pets"},
+    {"name": "Fairmount Park Elementary", "address": "575 41st St. S., St. Petersburg", "lat": 27.7441, "lon": -82.6892, "label": "🏠 No Pets"},
     {"name": "Pizzo Elementary School", "address": "11701 USF Bull Run Dr., Tampa", "lat": 28.0558, "lon": -82.4085, "label": "🏠 No Pets"},
     {"name": "Reddick Elementary School", "address": "325 W. Lake Dr., Wimauma", "lat": 27.7042, "lon": -82.3125, "label": "🏠 No Pets"},
     {"name": "Mulrennan Middle School", "address": "4215 Durant Rd., Valrico", "lat": 27.9025, "lon": -82.2452, "label": "🏠 No Pets"},
-    {"name": "Lockhart Elementary Magnet School", "address": "3719 N. 17th St., Tampa", "lat": 27.9785, "lon": -82.4412, "label": "🏠 No Pets"},
+    {"name": "Lockhart Elementary Magnet", "address": "3719 N. 17th St., Tampa", "lat": 27.9785, "lon": -82.4412, "label": "🏠 No Pets"},
     {"name": "Collins PK-8 School", "address": "12424 Summerfield Blvd., Riverview", "lat": 27.8125, "lon": -82.3142, "label": "🏠 No Pets"},
 
     # --- 🐾 GENERAL POPULATION (PET-FRIENDLY) ---
     {"name": "Gibbs High School", "address": "850 34th St. S., St. Petersburg", "lat": 27.7611, "lon": -82.6798, "label": "🐾 Pets OK"},
-    {"name": "Palm Harbor University High School", "address": "1900 Omaha St., Palm Harbor", "lat": 28.0841, "lon": -82.7533, "label": "🐾 Pets OK"},
+    {"name": "Palm Harbor University High", "address": "1900 Omaha St., Palm Harbor", "lat": 28.0841, "lon": -82.7533, "label": "🐾 Pets OK"},
     {"name": "Burnett Middle School", "address": "1010 N. Kingsway Rd., Seffner", "lat": 27.9625, "lon": -82.2852, "label": "🐾 Pets OK"},
     {"name": "Durant High School", "address": "4748 Cougar Path, Plant City", "lat": 27.8925, "lon": -82.1652, "label": "🐾 Pets OK"},
     {"name": "Middleton High School", "address": "4801 N. 22nd St., Tampa", "lat": 27.9891, "lon": -82.4346, "label": "🐾 Pets OK"},
@@ -57,7 +57,7 @@ SHELTERS = [
     {"name": "Highlands Grove Elementary", "address": "4510 Lakeland Highlands Rd., Lakeland", "lat": 27.9725, "lon": -81.9252, "label": "🐾 Pets OK"},
     {"name": "Kathleen High School", "address": "1100 Red Devil Way, Lakeland", "lat": 28.0625, "lon": -81.9852, "label": "🐾 Pets OK"},
     {"name": "R. Bruce Wagner Elementary", "address": "5500 Yates Rd., Lakeland", "lat": 28.0025, "lon": -82.0152, "label": "🐾 Pets OK"},
-    {"name": "Sleepy Hill Elementary School", "address": "2285 Sleepy Hill Rd., Lakeland", "lat": 28.0825, "lon": -81.9952, "label": "🐾 Pets OK"},
+    {"name": "Sleepy Hill Elementary", "address": "2285 Sleepy Hill Rd., Lakeland", "lat": 28.0825, "lon": -81.9952, "label": "🐾 Pets OK"},
     {"name": "Mulberry Middle School", "address": "500 S.E. MLK Jr. Ave., Mulberry", "lat": 27.8925, "lon": -81.9752, "label": "🐾 Pets OK"},
     {"name": "Lake Marion Creek Middle", "address": "3055 Lake Marion Creek Dr., Poinciana", "lat": 28.1125, "lon": -81.4952, "label": "🐾 Pets OK"},
     {"name": "Chain of Lakes Elementary", "address": "7001 Hwy. 653, Winter Haven", "lat": 27.9625, "lon": -81.6852, "label": "🐾 Pets OK"},
@@ -74,6 +74,7 @@ SHELTERS = [
     {"name": "Myakka Elementary School", "address": "37205 Manatee Ave., Myakka City", "lat": 27.3425, "lon": -82.1452, "label": "🐾 Pets OK"},
     {"name": "Sugg Middle School", "address": "5602 38th Ave. W., Bradenton", "lat": 27.4825, "lon": -82.6152, "label": "🐾 Pets OK"},
     {"name": "Robert H. Prine Elementary", "address": "3801 Southern Pkwy. W., Bradenton", "lat": 27.4625, "lon": -82.5952, "label": "🐾 Pets OK"},
+    {"name": "Virgil Mills Elementary", "address": "7200 69th St. E., Palmetto", "lat": 27.5625, "lon": -82.4852, "label": "🐾 Pets OK"},
     {"name": "Buffalo Creek Middle", "address": "7320 69th St. E., Palmetto", "lat": 27.5725, "lon": -82.4752, "label": "🐾 Pets OK"},
 
     # --- ♿ SPECIAL NEEDS SHELTERS ---
@@ -81,8 +82,8 @@ SHELTERS = [
     {"name": "Oak Grove Middle School", "address": "1370 S. Belcher Rd., Clearwater", "lat": 27.9358, "lon": -82.7512, "label": "♿ Special Needs"},
     {"name": "Sumner High School", "address": "10650 County Rd. 672, Riverview", "lat": 27.7825, "lon": -82.2852, "label": "♿ Special Needs"},
     {"name": "Strawberry Crest High", "address": "4691 Gallagher Rd., Dover", "lat": 28.0225, "lon": -82.2352, "label": "♿ Special Needs"},
-    {"name": "Fasano Regional Hurricane Center", "address": "11611 Denton Ave., Hudson", "lat": 28.3425, "lon": -82.6752, "label": "♿ Special Needs"},
-    {"name": "FDOH Polk Specialty Care", "address": "1255 Brice Blvd., Bartow", "lat": 27.8825, "lon": -81.8352, "label": "♿ Special Needs"},
+    {"name": "Fasano Hurricane Center", "address": "11611 Denton Ave., Hudson", "lat": 28.3425, "lon": -82.6752, "label": "♿ Special Needs"},
+    {"name": "FDOH Polk Specialty Unit", "address": "1255 Brice Blvd., Bartow", "lat": 27.8825, "lon": -81.8352, "label": "♿ Special Needs"},
     {"name": "Ridge Community High", "address": "500 W. Orchid Dr., Davenport", "lat": 28.1825, "lon": -81.5952, "label": "♿ Special Needs"},
     {"name": "McKeel Academy", "address": "1810 W. Parker St., Lakeland", "lat": 28.0325, "lon": -81.9852, "label": "♿ Special Needs"},
 
@@ -104,22 +105,20 @@ def home():
     user_lon = request.form.get('lon')
     search_query = request.form.get('q', '').lower()
     
-    # Stress Keyword Detection
+    # Keyword alert trigger
     stress_keywords = ['help', 'stress', 'anxiety', 'panic', 'scared', 'kids', 'sad', 'mental']
     show_alert = any(word in search_query for word in stress_keywords)
 
-    is_localized = False
     if user_lat and user_lon:
         try:
             u_lat, u_lon = float(user_lat), float(user_lon)
             for s in display_list:
                 s['dist'] = round(calculate_distance(u_lat, u_lon, s['lat'], s['lon']), 1)
             display_list.sort(key=lambda x: x.get('dist', 999))
-            is_localized = True
         except:
             pass
 
-    return render_template('index.html', shelters=display_list, show_alert=show_alert, localized=is_localized, user_time=datetime.now().strftime("%I:%M %p"))
+    return render_template('index.html', shelters=display_list, show_alert=show_alert, user_time=datetime.now().strftime("%I:%M %p"))
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
