@@ -61,20 +61,36 @@ def home():
     
     now = datetime.now().strftime("%I:%M %p")
     return render_template('index.html', user_time=now, shelters=shelters)
-def find_nearest():
-    user_data = request.json
-    user_lat = user_data['lat']
-    user_lon = user_data['lon']
-    
-    # Assume 'SHELTERS' is your list of shelter dictionaries
-    for shelter in SHELTERS:
-        # You'll need to add 'lat' and 'long' to your shelter data
-        dist = calculate_distance(user_lat, user_lon, shelter['lat'], shelter['long'])
-        shelter['distance'] = round(dist, 2)
+def calculate_mi(lat1, lon1, lat2, lon2):
+    """The Haversine Formula in Python"""
+    rad = math.pi / 180
+    dlat = (lat2 - lat1) * rad
+    dlon = (lon2 - lon1) * rad
+    a = math.sin(dlat/2)**2 + math.cos(lat1*rad) * math.cos(lat2*rad) * math.sin(dlon/2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    return 3959 * c # Returns Miles
 
-    # Sort by distance and return the top 3
-    nearest = sorted(SHELTERS, key=lambda x: x['distance'])[:3]
-    return jsonify(nearest)
+@app.route('/')
+def home():
+    now = datetime.now().strftime("%I:%M %p")
+    # By default, we show the list unsorted
+    return render_template('index.html', shelters=SHELTERS, user_time=now)
+
+@app.route('/near', methods=['POST'])
+def near():
+    # Receive GPS coordinates from the user's browser
+    coords = request.get_json()
+    u_lat = coords.get('lat')
+    u_lon = coords.get('lon')
+
+    # Python calculates the distance for every shelter in your list
+    for s in SHELTERS:
+        s['dist'] = round(calculate_mi(u_lat, u_lon, s['lat'], s['lon']), 1)
+
+    # Python sorts the list so the closest is #1
+    sorted_list = sorted(SHELTERS, key=lambda x: x['dist'])
+    
+    return jsonify(sorted_list)
 
 if __name__ == '__main__':
     app.run(debug=True)
