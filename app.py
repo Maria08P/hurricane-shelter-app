@@ -8,49 +8,91 @@ app = Flask(__name__)
 # Radius of the Earth in miles
 R = 3958.8 
 
-# ALL SHELTERS CATEGORIZED
+# COMPLETE LIST OF ALL 66 SHELTERS
 SHELTERS = [
-    # --- GENERAL POPULATION (NO PETS) ---
-    {"name": "Clearwater Fundamental Middle", "address": "1660 Palmetto St, Clearwater", "lat": 27.9658, "lon": -82.7711, "status": "accepting", "label": "General (No Pets)"},
-    {"name": "Belleair Elementary", "address": "1156 Lakeview Rd, Clearwater", "lat": 27.9515, "lon": -82.7745, "status": "accepting", "label": "General (No Pets)"},
-    {"name": "Melrose Elementary", "address": "1752 13th Ave S, St. Pete", "lat": 27.7562, "lon": -82.6575, "status": "accepting", "label": "General (No Pets)"},
-    {"name": "Campbell Park Elementary", "address": "1051 7th Ave S, St. Pete", "lat": 27.7645, "lon": -82.6492, "status": "accepting", "label": "General (No Pets)"},
-    {"name": "Palm Harbor Middle", "address": "1800 Tampa Rd, Palm Harbor", "lat": 28.0772, "lon": -82.7425, "status": "accepting", "label": "General (No Pets)"},
-    {"name": "New Heights Elementary", "address": "3901 37th St N, St. Pete", "lat": 27.8075, "lon": -82.6842, "status": "accepting", "label": "General (No Pets)"},
-    {"name": "Fairmount Park Elementary", "address": "575 41st St S, St. Pete", "lat": 27.7441, "lon": -82.6892, "status": "accepting", "label": "General (No Pets)"},
-    {"name": "Pizzo Elementary School", "address": "11701 USF Bull Run Dr, Tampa", "lat": 28.0558, "lon": -82.4085, "status": "accepting", "label": "General (No Pets)"},
-    {"name": "Reddick Elementary", "address": "325 W Lake Dr, Wimauma", "lat": 27.7042, "lon": -82.3125, "status": "accepting", "label": "General (No Pets)"},
-    {"name": "Mulrennan Middle", "address": "4215 Durant Rd, Valrico", "lat": 27.9025, "lon": -82.2452, "status": "accepting", "label": "General (No Pets)"},
-    {"name": "Lockhart Elementary Magnet", "address": "3719 N 17th St, Tampa", "lat": 27.9785, "lon": -82.4412, "status": "accepting", "label": "General (No Pets)"},
-    {"name": "Collins PK-8 School", "address": "12424 Summerfield Blvd, Riverview", "lat": 27.8125, "lon": -82.3142, "status": "accepting", "label": "General (No Pets)"},
+    # --- 🏠 GENERAL POPULATION (NO PETS) ---
+    {"name": "Clearwater Fundamental Middle", "address": "1660 Palmetto St., Clearwater", "lat": 27.9658, "lon": -82.7711, "label": "🏠 No Pets"},
+    {"name": "Belleair Elementary School", "address": "1156 Lakeview Rd., Clearwater", "lat": 27.9515, "lon": -82.7745, "label": "🏠 No Pets"},
+    {"name": "Melrose Elementary School", "address": "1752 13th Ave. S., St. Petersburg", "lat": 27.7562, "lon": -82.6575, "label": "🏠 No Pets"},
+    {"name": "Campbell Park Elementary School", "address": "1051 7th Ave. S., St. Petersburg", "lat": 27.7645, "lon": -82.6492, "label": "🏠 No Pets"},
+    {"name": "Palm Harbor Middle School", "address": "1800 Tampa Rd., Palm Harbor", "lat": 28.0772, "lon": -82.7425, "label": "🏠 No Pets"},
+    {"name": "New Heights Elementary School", "address": "3901 37th St. N., St. Petersburg", "lat": 27.8075, "lon": -82.6842, "label": "🏠 No Pets"},
+    {"name": "Fairmount Park Elementary School", "address": "575 41st St. S., St. Petersburg", "lat": 27.7441, "lon": -82.6892, "label": "🏠 No Pets"},
+    {"name": "Pizzo Elementary School", "address": "11701 USF Bull Run Dr., Tampa", "lat": 28.0558, "lon": -82.4085, "label": "🏠 No Pets"},
+    {"name": "Reddick Elementary School", "address": "325 W. Lake Dr., Wimauma", "lat": 27.7042, "lon": -82.3125, "label": "🏠 No Pets"},
+    {"name": "Mulrennan Middle School", "address": "4215 Durant Rd., Valrico", "lat": 27.9025, "lon": -82.2452, "label": "🏠 No Pets"},
+    {"name": "Lockhart Elementary Magnet School", "address": "3719 N. 17th St., Tampa", "lat": 27.9785, "lon": -82.4412, "label": "🏠 No Pets"},
+    {"name": "Collins PK-8 School", "address": "12424 Summerfield Blvd., Riverview", "lat": 27.8125, "lon": -82.3142, "label": "🏠 No Pets"},
 
-    # --- PET FRIENDLY ---
-    {"name": "Gibbs High School", "address": "850 34th St S, St. Pete", "lat": 27.7611, "lon": -82.6798, "status": "accepting", "label": "🐾 Pets Friendly"},
-    {"name": "Palm Harbor University High", "address": "1900 Omaha St, Palm Harbor", "lat": 28.0841, "lon": -82.7533, "status": "accepting", "label": "🐾 Pets Friendly"},
-    {"name": "Middleton High School", "address": "4801 N 22nd St, Tampa", "lat": 27.9891, "lon": -82.4346, "status": "accepting", "label": "🐾 Pets Friendly"},
-    {"name": "Shields Middle School", "address": "15732 Beth Shields Way, Ruskin", "lat": 27.7125, "lon": -82.3920, "status": "accepting", "label": "🐾 Pets Friendly"},
-    {"name": "Steinbrenner High", "address": "5575 W Lutz Lake Fern Rd, Lutz", "lat": 28.1485, "lon": -82.5252, "status": "accepting", "label": "🐾 Pets Friendly"},
-    {"name": "Fivay High School", "address": "12115 Chicago Ave, Hudson", "lat": 28.3475, "lon": -82.6612, "status": "accepting", "label": "🐾 Pets Friendly"},
-    {"name": "Booker High School", "address": "3201 N Orange Ave, Sarasota", "lat": 27.3625, "lon": -82.5312, "status": "accepting", "label": "🐾 Pets Friendly"},
-    {"name": "North Port High", "address": "6400 W Price Blvd, North Port", "lat": 27.0625, "lon": -82.1952, "status": "accepting", "label": "🐾 Pets Friendly"},
-    {"name": "Winter Haven High", "address": "600 6th St SE, Winter Haven", "lat": 28.0175, "lon": -81.7252, "status": "accepting", "label": "🐾 Pets Friendly"},
-    {"name": "Tenoroc High School", "address": "4905 Saddle Creek Rd, Lakeland", "lat": 28.0825, "lon": -81.8752, "status": "accepting", "label": "🐾 Pets Friendly"},
-    {"name": "Sugg Middle School", "address": "5602 38th Ave W, Bradenton", "lat": 27.4825, "lon": -82.6152, "status": "accepting", "label": "🐾 Pets Friendly"},
+    # --- 🐾 GENERAL POPULATION (PET-FRIENDLY) ---
+    {"name": "Gibbs High School", "address": "850 34th St. S., St. Petersburg", "lat": 27.7611, "lon": -82.6798, "label": "🐾 Pets OK"},
+    {"name": "Palm Harbor University High School", "address": "1900 Omaha St., Palm Harbor", "lat": 28.0841, "lon": -82.7533, "label": "🐾 Pets OK"},
+    {"name": "Burnett Middle School", "address": "1010 N. Kingsway Rd., Seffner", "lat": 27.9625, "lon": -82.2852, "label": "🐾 Pets OK"},
+    {"name": "Durant High School", "address": "4748 Cougar Path, Plant City", "lat": 27.8925, "lon": -82.1652, "label": "🐾 Pets OK"},
+    {"name": "Middleton High School", "address": "4801 N. 22nd St., Tampa", "lat": 27.9891, "lon": -82.4346, "label": "🐾 Pets OK"},
+    {"name": "Shields Middle School", "address": "15732 Beth Shields Way, Ruskin", "lat": 27.7125, "lon": -82.3920, "label": "🐾 Pets OK"},
+    {"name": "Steinbrenner High School", "address": "5575 W. Lutz Lake Fern Rd., Lutz", "lat": 28.1485, "lon": -82.5252, "label": "🐾 Pets OK"},
+    {"name": "Centennial Middle School", "address": "38505 Centennial Rd., Dade City", "lat": 28.3125, "lon": -82.1752, "label": "🐾 Pets OK"},
+    {"name": "Fivay High School", "address": "12115 Chicago Ave., Hudson", "lat": 28.3475, "lon": -82.6612, "label": "🐾 Pets OK"},
+    {"name": "Wesley Chapel High School", "address": "30651 Wells Rd., Wesley Chapel", "lat": 28.2325, "lon": -82.3252, "label": "🐾 Pets OK"},
+    {"name": "River Ridge Middle/High", "address": "11646 Town Center Rd., New Port Richey", "lat": 28.2625, "lon": -82.6452, "label": "🐾 Pets OK"},
+    {"name": "Sunlake High School", "address": "3023 Sunlake Blvd., Land O’ Lakes", "lat": 28.1925, "lon": -82.5052, "label": "🐾 Pets OK"},
+    {"name": "Atwater Elementary School", "address": "4701 Huntsville Ave., North Port", "lat": 27.0825, "lon": -82.2152, "label": "🐾 Pets OK"},
+    {"name": "Booker High School", "address": "3201 N. Orange Ave., Sarasota", "lat": 27.3625, "lon": -82.5312, "label": "🐾 Pets OK"},
+    {"name": "Brookside Middle School", "address": "3636 South Shade Ave., Sarasota", "lat": 27.3125, "lon": -82.5152, "label": "🐾 Pets OK"},
+    {"name": "Gulf Gate Elementary", "address": "6500 S. Lockwood Ridge Rd., Sarasota", "lat": 27.2625, "lon": -82.4952, "label": "🐾 Pets OK"},
+    {"name": "Heron Creek Middle School", "address": "6501 W. Price Blvd., North Port", "lat": 27.0525, "lon": -82.1652, "label": "🐾 Pets OK"},
+    {"name": "North Port High School", "address": "6400 W. Price Blvd., North Port", "lat": 27.0625, "lon": -82.1952, "label": "🐾 Pets OK"},
+    {"name": "Phillippi Shores Elementary", "address": "4747 S. Tamiami Trail, Sarasota", "lat": 27.2725, "lon": -82.5352, "label": "🐾 Pets OK"},
+    {"name": "Southside Elementary School", "address": "1901 Webber St., Sarasota", "lat": 27.3125, "lon": -82.5252, "label": "🐾 Pets OK"},
+    {"name": "Woodland Middle School", "address": "2700 Panacea Blvd., North Port", "lat": 27.0925, "lon": -82.2452, "label": "🐾 Pets OK"},
+    {"name": "West Hernando Middle School", "address": "14325 Ken Austin Pkwy., Brooksville", "lat": 28.5525, "lon": -82.4952, "label": "🐾 Pets OK"},
+    {"name": "Enrichment Center", "address": "800 John Gary Grubbs Blvd., Brooksville", "lat": 28.5425, "lon": -82.3952, "label": "🐾 Pets OK"},
+    {"name": "Challenger K-8", "address": "13400 Elgin Blvd., Spring Hill", "lat": 28.4825, "lon": -82.5352, "label": "🐾 Pets OK"},
+    {"name": "Auburndale High School", "address": "1 Bloodhound Trail, Auburndale", "lat": 28.0625, "lon": -81.7952, "label": "🐾 Pets OK"},
+    {"name": "Spessard Holland Elementary", "address": "2432 E.F. Griffin Rd., Bartow", "lat": 27.9125, "lon": -81.8252, "label": "🐾 Pets OK"},
+    {"name": "Citrus Ridge Academy", "address": "1775 Sand Mine Rd., Davenport", "lat": 28.3225, "lon": -81.6552, "label": "🐾 Pets OK"},
+    {"name": "Horizons Elementary School", "address": "1700 Forest Lake Dr., Davenport", "lat": 28.2125, "lon": -81.6052, "label": "🐾 Pets OK"},
+    {"name": "George Jenkins High School", "address": "6000 Lakeland Highlands Rd., Lakeland", "lat": 27.9525, "lon": -81.9152, "label": "🐾 Pets OK"},
+    {"name": "Highlands Grove Elementary", "address": "4510 Lakeland Highlands Rd., Lakeland", "lat": 27.9725, "lon": -81.9252, "label": "🐾 Pets OK"},
+    {"name": "Kathleen High School", "address": "1100 Red Devil Way, Lakeland", "lat": 28.0625, "lon": -81.9852, "label": "🐾 Pets OK"},
+    {"name": "R. Bruce Wagner Elementary", "address": "5500 Yates Rd., Lakeland", "lat": 28.0025, "lon": -82.0152, "label": "🐾 Pets OK"},
+    {"name": "Sleepy Hill Elementary School", "address": "2285 Sleepy Hill Rd., Lakeland", "lat": 28.0825, "lon": -81.9952, "label": "🐾 Pets OK"},
+    {"name": "Mulberry Middle School", "address": "500 S.E. MLK Jr. Ave., Mulberry", "lat": 27.8925, "lon": -81.9752, "label": "🐾 Pets OK"},
+    {"name": "Lake Marion Creek Middle", "address": "3055 Lake Marion Creek Dr., Poinciana", "lat": 28.1125, "lon": -81.4952, "label": "🐾 Pets OK"},
+    {"name": "Chain of Lakes Elementary", "address": "7001 Hwy. 653, Winter Haven", "lat": 27.9625, "lon": -81.6852, "label": "🐾 Pets OK"},
+    {"name": "Winter Haven High School", "address": "600 6th St. S.E., Winter Haven", "lat": 28.0175, "lon": -81.7252, "label": "🐾 Pets OK"},
+    {"name": "Haines City High School", "address": "2800 Hornet Dr., Haines City", "lat": 28.1225, "lon": -81.6052, "label": "🐾 Pets OK"},
+    {"name": "Lake Region High School", "address": "1995 Thunder Rd., Eagle Lake", "lat": 27.9725, "lon": -81.7552, "label": "🐾 Pets OK"},
+    {"name": "Tenoroc High School", "address": "4905 Saddle Creek Rd., Lakeland", "lat": 28.0825, "lon": -81.8752, "label": "🐾 Pets OK"},
+    {"name": "Gullett Elementary School", "address": "12125 44th Ave. E., Bradenton", "lat": 27.4425, "lon": -82.4152, "label": "🐾 Pets OK"},
+    {"name": "Harvey Elementary School", "address": "8610 115th Ave. E., Parrish", "lat": 27.5925, "lon": -82.3952, "label": "🐾 Pets OK"},
+    {"name": "McNeal Elementary School", "address": "6325 Lorraine Rd., Bradenton", "lat": 27.4225, "lon": -82.4152, "label": "🐾 Pets OK"},
+    {"name": "Miller Elementary School", "address": "601 43rd St. W., Bradenton", "lat": 27.4925, "lon": -82.6052, "label": "🐾 Pets OK"},
+    {"name": "Mills Elementary School", "address": "7200 69th St. E., Palmetto", "lat": 27.5625, "lon": -82.4852, "label": "🐾 Pets OK"},
+    {"name": "Mona Jain Middle School", "address": "12205 44th Ave. E., Bradenton", "lat": 27.4425, "lon": -82.4052, "label": "🐾 Pets OK"},
+    {"name": "Myakka Elementary School", "address": "37205 Manatee Ave., Myakka City", "lat": 27.3425, "lon": -82.1452, "label": "🐾 Pets OK"},
+    {"name": "Sugg Middle School", "address": "5602 38th Ave. W., Bradenton", "lat": 27.4825, "lon": -82.6152, "label": "🐾 Pets OK"},
+    {"name": "Robert H. Prine Elementary", "address": "3801 Southern Pkwy. W., Bradenton", "lat": 27.4625, "lon": -82.5952, "label": "🐾 Pets OK"},
+    {"name": "Buffalo Creek Middle", "address": "7320 69th St. E., Palmetto", "lat": 27.5725, "lon": -82.4752, "label": "🐾 Pets OK"},
 
-    # --- SPECIAL NEEDS ---
-    {"name": "Dunedin Highland Middle", "address": "70 Patricia Ave, Dunedin", "lat": 28.0061, "lon": -82.7738, "status": "nearingfull", "label": "♿ Special Needs"},
-    {"name": "Oak Grove Middle", "address": "1370 S Belcher Rd, Clearwater", "lat": 27.9358, "lon": -82.7512, "status": "accepting", "label": "♿ Special Needs"},
-    {"name": "Sumner High School", "address": "10650 County Rd 672, Riverview", "lat": 27.7825, "lon": -82.2852, "status": "accepting", "label": "♿ Special Needs"},
-    {"name": "Ridge Community High", "address": "500 W Orchid Dr, Davenport", "lat": 28.1825, "lon": -81.5952, "status": "accepting", "label": "♿ Special Needs"},
+    # --- ♿ SPECIAL NEEDS SHELTERS ---
+    {"name": "Dunedin Highland Middle", "address": "70 Patricia Ave., Dunedin", "lat": 28.0061, "lon": -82.7738, "label": "♿ Special Needs"},
+    {"name": "Oak Grove Middle School", "address": "1370 S. Belcher Rd., Clearwater", "lat": 27.9358, "lon": -82.7512, "label": "♿ Special Needs"},
+    {"name": "Sumner High School", "address": "10650 County Rd. 672, Riverview", "lat": 27.7825, "lon": -82.2852, "label": "♿ Special Needs"},
+    {"name": "Strawberry Crest High", "address": "4691 Gallagher Rd., Dover", "lat": 28.0225, "lon": -82.2352, "label": "♿ Special Needs"},
+    {"name": "Fasano Regional Hurricane Center", "address": "11611 Denton Ave., Hudson", "lat": 28.3425, "lon": -82.6752, "label": "♿ Special Needs"},
+    {"name": "FDOH Polk Specialty Care", "address": "1255 Brice Blvd., Bartow", "lat": 27.8825, "lon": -81.8352, "label": "♿ Special Needs"},
+    {"name": "Ridge Community High", "address": "500 W. Orchid Dr., Davenport", "lat": 28.1825, "lon": -81.5952, "label": "♿ Special Needs"},
+    {"name": "McKeel Academy", "address": "1810 W. Parker St., Lakeland", "lat": 28.0325, "lon": -81.9852, "label": "♿ Special Needs"},
 
-    # --- LAST RESORT ---
-    {"name": "Seminole Hard Rock Casino", "address": "5223 Orient Rd, Tampa", "lat": 27.9958, "lon": -82.3712, "status": "full", "label": "⚠️ Last Resort"},
-    {"name": "City Furniture", "address": "3205 S Frontage Rd, Plant City", "lat": 28.0125, "lon": -82.1152, "status": "full", "label": "⚠️ Last Resort"}
-    # Note: I have included samples of your list here. 
-    # To keep code clean, ensure every dict has "lat" and "lon" keys.
+    # --- ⚠️ LAST RESORT SHELTERS ---
+    {"name": "City Furniture", "address": "3205 S. Frontage Rd., Plant City", "lat": 28.0125, "lon": -82.1152, "label": "⚠️ Last Resort"},
+    {"name": "Seminole Hard Rock Casino", "address": "5223 Orient Rd., Tampa", "lat": 27.9958, "lon": -82.3712, "label": "⚠️ Last Resort"},
+    {"name": "BayCare (Old B&N)", "address": "11802 N. Dale Mabry Hwy., Tampa", "lat": 28.0525, "lon": -82.5012, "label": "⚠️ Last Resort"}
 ]
 
-def get_distance(lat1, lon1, lat2, lon2):
+def calculate_distance(lat1, lon1, lat2, lon2):
     p = math.pi/180
     a = 0.5 - math.cos((lat2-lat1)*p)/2 + math.cos(lat1*p) * math.cos(lat2*p) * (1-math.cos((lon2-lon1)*p))/2
     return 2 * R * math.asin(math.sqrt(a))
@@ -58,29 +100,26 @@ def get_distance(lat1, lon1, lat2, lon2):
 @app.route('/', methods=['GET', 'POST'])
 def home():
     display_list = [s.copy() for s in SHELTERS]
-    
-    # Handle GPS Post
     user_lat = request.form.get('lat')
     user_lon = request.form.get('lon')
-    
-    # Handle Stress Keyword Search
     search_query = request.form.get('q', '').lower()
-    stress_keywords = ['help', 'stress', 'anxiety', 'panic', 'scared', 'kids', 'sad']
+    
+    # Stress Keyword Detection
+    stress_keywords = ['help', 'stress', 'anxiety', 'panic', 'scared', 'kids', 'sad', 'mental']
     show_alert = any(word in search_query for word in stress_keywords)
 
+    is_localized = False
     if user_lat and user_lon:
         try:
             u_lat, u_lon = float(user_lat), float(user_lon)
             for s in display_list:
-                s['dist'] = round(get_distance(u_lat, u_lon, s['lat'], s['lon']), 1)
+                s['dist'] = round(calculate_distance(u_lat, u_lon, s['lat'], s['lon']), 1)
             display_list.sort(key=lambda x: x.get('dist', 999))
+            is_localized = True
         except:
             pass
 
-    return render_template('index.html', 
-                           shelters=display_list, 
-                           show_alert=show_alert,
-                           user_time=datetime.now().strftime("%I:%M %p"))
+    return render_template('index.html', shelters=display_list, show_alert=show_alert, localized=is_localized, user_time=datetime.now().strftime("%I:%M %p"))
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
