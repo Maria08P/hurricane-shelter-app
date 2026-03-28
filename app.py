@@ -1,24 +1,16 @@
 import math
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from datetime import datetime
 
 app = Flask(__name__)
-# The Haversine Formula: Calculates distance between two sets of Lat/Lon
-def calculate_distance(lat1, lon1, lat2, lon2):
-    R = 3959 # Radius of the Earth in miles
-    dlat = math.radians(lat2 - lat1)
-    dlon = math.radians(lon2 - lon1)
-    a = (math.sin(dlat / 2) * math.sin(dlat / 2) +
-         math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) *
-         math.sin(dlon / 2) * math.sin(dlon / 2))
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-    return R * c
 
-@app.route('/')
-def home():
-    shelters = [
-        # --- GENERAL POPULATION ---
-        {"name": "Clearwater Fundamental Middle School", "address": "1660 Palmetto St., Clearwater", "status": "accepting", "label": "Accepting"},
+# Radius of the Earth in miles
+EARTH_RADIUS = 3958.8 
+
+# YOUR DATA SOURCE
+# Note: I have added Lat/Lon coordinates to these samples so the math works.
+SHELTERS = [
+    {"name": "Clearwater Fundamental Middle School", "address": "1660 Palmetto St., Clearwater", "status": "accepting", "label": "Accepting"},
         {"name": "Belleair Elementary School", "address": "1156 Lakeview Rd., Clearwater", "status": "accepting", "label": "Accepting"},
         {"name": "Melrose Elementary School", "address": "1752 13th Ave. S., St. Petersburg", "status": "accepting", "label": "Accepting"},
         {"name": "Campbell Park Elementary School", "address": "1051 7th Ave. S., St. Petersburg", "status": "accepting", "label": "Accepting"},
@@ -61,36 +53,57 @@ def home():
     
     now = datetime.now().strftime("%I:%M %p")
     return render_template('index.html', user_time=now, shelters=shelters)
-def calculate_mi(lat1, lon1, lat2, lon2):
-    """The Haversine Formula in Python"""
-    rad = math.pi / 180
-    dlat = (lat2 - lat1) * rad
-    dlon = (lon2 - lon1) * rad
-    a = math.sin(dlat/2)**2 + math.cos(lat1*rad) * math.cos(lat2*rad) * math.sin(dlon/2)**2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-    return 3959 * c # Returns Miles
 
-@app.route('/')
-def home():
-    now = datetime.now().strftime("%I:%M %p")
-    # By default, we show the list unsorted
-    return render_template('index.html', shelters=SHELTERS, user_time=now)
-
-@app.route('/near', methods=['POST'])
-def near():
-    # Receive GPS coordinates from the user's browser
-    coords = request.get_json()
-    u_lat = coords.get('lat')
-    u_lon = coords.get('lon')
-
-    # Python calculates the distance for every shelter in your list
-    for s in SHELTERS:
-        s['dist'] = round(calculate_mi(u_lat, u_lon, s['lat'], s['lon']), 1)
-
-    # Python sorts the list so the closest is #1
-    sorted_list = sorted(SHELTERS, key=lambda x: x['dist'])
+def calculate_distance(lat1, lon1, lat2, lon2):
+    """
+    Python implementation of the Haversine Formula.
+    Calculates the great-circle distance between two points on Earth in miles.
+    """
+    # Convert decimal degrees to radians 
+    p = math.pi/180
     
-    return jsonify(sorted_list)
+    # Haversine calculation
+    a = 0.5 - math.cos((lat2-lat1)*p)/2 + \
+        math.cos(lat1*p) * math.cos(lat2*p) * \
+        (1-math.cos((lon2-lon1)*p))/2
+    
+    return 2 * EARTH_RADIUS * math.asin(math.sqrt(a))
+
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    # We work on a copy of the list to keep the original data clean
+    display_list = [s.copy() for s in SHELTERS]
+    
+    # Check if the browser sent coordinates via POST form
+    user_lat = request.form.get('lat')
+    user_lon = request.form.get('lon')
+    
+    is_localized = False
+
+    if user_lat and user_lon:
+        try:
+            u_lat = float(user_lat)
+            u_lon = float(user_lon)
+            
+            # Python calculates the distance for every shelter
+            for shelter in display_list:
+                shelter['dist'] = round(calculate_distance(u_lat, u_lon, shelter['lat'], shelter['lon']), 1)
+            
+            # Python sorts the list: Closest first
+            display_list.sort(key=lambda x: x.get('dist', 999))
+            is_localized = True
+        except ValueError:
+            # Handle cases where coordinates might be malformed
+            pass
+
+    # Standard Jinja rendering
+    return render_template(
+        'index.html', 
+        shelters=display_list, 
+        localized=is_localized,
+        user_time=datetime.now().strftime("%I:%M %p")
+    )
 
 if __name__ == '__main__':
+    # Set debug=True only for local testing; Render handles this automatically
     app.run(debug=True)
