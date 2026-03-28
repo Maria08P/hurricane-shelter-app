@@ -1,7 +1,18 @@
+import math
 from flask import Flask, render_template
 from datetime import datetime
 
 app = Flask(__name__)
+# The Haversine Formula: Calculates distance between two sets of Lat/Lon
+def calculate_distance(lat1, lon1, lat2, lon2):
+    R = 3959 # Radius of the Earth in miles
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
+    a = (math.sin(dlat / 2) * math.sin(dlat / 2) +
+         math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) *
+         math.sin(dlon / 2) * math.sin(dlon / 2))
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    return R * c
 
 @app.route('/')
 def home():
@@ -50,6 +61,20 @@ def home():
     
     now = datetime.now().strftime("%I:%M %p")
     return render_template('index.html', user_time=now, shelters=shelters)
+def find_nearest():
+    user_data = request.json
+    user_lat = user_data['lat']
+    user_lon = user_data['lon']
+    
+    # Assume 'SHELTERS' is your list of shelter dictionaries
+    for shelter in SHELTERS:
+        # You'll need to add 'lat' and 'long' to your shelter data
+        dist = calculate_distance(user_lat, user_lon, shelter['lat'], shelter['long'])
+        shelter['distance'] = round(dist, 2)
+
+    # Sort by distance and return the top 3
+    nearest = sorted(SHELTERS, key=lambda x: x['distance'])[:3]
+    return jsonify(nearest)
 
 if __name__ == '__main__':
     app.run(debug=True)
