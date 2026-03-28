@@ -11,18 +11,18 @@
         .container { max-width: 1000px; width: 100%; }
         
         /* Card System */
-        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); margin-bottom: 25px; border-top: 5px solid #2e7d32; position: relative; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); margin-bottom: 25px; border-top: 5px solid #2e7d32; }
         h1 { color: #2e7d32; text-align: center; margin-top: 0; margin-bottom: 10px; }
-        h2 { margin-top: 0; font-size: 22px; }
-
-        /* Navigation Buttons */
-        .nav-btn { border: 1px solid #2e7d32; background: none; color: #2e7d32; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: 0.3s; }
+        
+        /* Navigation & Buttons */
+        .nav-btn { border: 1px solid #2e7d32; background: none; color: #2e7d32; padding: 12px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; transition: 0.3s; width: 100%; margin-bottom: 10px; }
         .nav-btn:hover { background: #2e7d32; color: white; }
+        .geo-btn { background: #e8f5e9; border: 2px solid #2e7d32; color: #1b5e20; }
 
         /* Hotline Section */
         .hotline-section { display: flex; flex-wrap: wrap; gap: 15px; background: #f9fdf9; padding: 20px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #e0eee0; }
         .hotline-item { min-width: 140px; flex: 1; }
-        .hotline-item strong { display: block; color: #2e7d32; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .hotline-item strong { display: block; color: #2e7d32; font-size: 11px; text-transform: uppercase; }
         .hotline-number { color: #1b5e20; text-decoration: none; font-weight: bold; font-size: 15px; }
 
         /* Search & Table */
@@ -31,155 +31,130 @@
         th { border-bottom: 2px solid #e8f5e9; padding: 12px; text-align: left; color: #666; font-size: 13px; }
         td { padding: 15px 12px; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
         
-        /* Badges & UI Elements */
+        /* Badges */
         .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
         .accepting { background-color: #e6f4ea; color: #1b5e20; }
         .full { background-color: #fdecea; color: #c62828; }
         .nearingfull { background-color: #fff4e0; color: #e65100; }
         
-        .map-btn { text-decoration: none; background: white; color: #2e7d32; padding: 8px 14px; border: 1px solid #a5d6a7; border-radius: 6px; font-size: 12px; font-weight: bold; transition: 0.2s; }
-        .map-btn:hover { background: #2e7d32; color: white; }
+        .map-btn { text-decoration: none; background: white; color: #2e7d32; padding: 8px 14px; border: 1px solid #a5d6a7; border-radius: 6px; font-size: 12px; font-weight: bold; }
 
-        /* Resource Grids */
-        .tips-grid, .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
-        .tip-item { background: #fcfdfc; padding: 15px; border-radius: 8px; border-left: 4px solid #a5d6a7; }
-        .tip-item strong { display: block; margin-bottom: 5px; color: #333; }
-        
-        .resource-card { border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; transition: 0.2s; text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; background: white; }
-        .resource-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-color: #2e7d32; }
-        .resource-tag { font-size: 10px; text-transform: uppercase; font-weight: bold; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; display: inline-block; }
+        /* Resource Grid */
+        .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
+        .resource-card { border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; text-decoration: none; color: inherit; background: white; display: block; transition: 0.2s; }
+        .resource-card:hover { border-color: #2e7d32; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transform: translateY(-2px); }
 
-        /* Print Logic */
         @media print {
-            #searchInput, .map-btn, iframe, button, .no-print { display: none !important; }
-            .card { box-shadow: none; border: 1px solid #eee; break-inside: avoid; margin-bottom: 10px; }
-            .page-wrapper { padding: 0; }
+            .no-print, button, form, #searchInput, iframe { display: none !important; }
+            .card { box-shadow: none; border: 1px solid #eee; break-inside: avoid; }
             body { background: white; }
         }
     </style>
 </head>
 <body>
 
-    <div class="page-wrapper">
-        <div class="container">
-            
-            <div style="margin-bottom: 15px; overflow: hidden;">
-                <button onclick="window.print()" class="no-print" style="background: #2e7d32; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; float: right;">
-                    🖨️ Save/Print Offline
+<div class="page-wrapper">
+    <div class="container">
+        
+        <div class="card">
+            <h1>Florida Hurricane Relief Hub</h1>
+            <p style="text-align: center; color: #666; font-size: 13px;">Update Time: {{ user_time }}</p>
+
+            <form id="geoForm" method="POST" action="/" class="no-print">
+                <input type="hidden" name="lat" id="lat">
+                <input type="hidden" name="lon" id="lon">
+                <button type="button" class="nav-btn geo-btn" id="geoBtn"
+                        onclick="navigator.geolocation.getCurrentPosition(pos => { 
+                            document.getElementById('lat').value = pos.coords.latitude; 
+                            document.getElementById('lon').value = pos.coords.longitude; 
+                            document.getElementById('geoBtn').innerText = '⌛ Calculating Nearest Shelters...';
+                            document.getElementById('geoForm').submit(); 
+                        }, err => { alert('Please enable location services in your browser.'); })">
+                    📍 Find Closest Shelters (Use My GPS)
                 </button>
+            </form>
+
+            <div class="hotline-section">
+                <div class="hotline-item"><strong>Emergency</strong><a href="tel:911" class="hotline-number">911</a></div>
+                <div class="hotline-item"><strong>FL Emergency Info</strong><a href="tel:8003423557" class="hotline-number">1-800-342-3557</a></div>
+                <div class="hotline-item"><strong>Crisis Support</strong><a href="tel:988" class="hotline-number">988</a></div>
             </div>
 
-            <div class="card">
-                <h1>Florida Hurricane Relief Hub</h1>
+            <div id="shelters">
+                <input type="text" id="searchInput" class="no-print" placeholder="Search manually by school name or city..." oninput="filterTable()">
                 
-                <div class="no-print" style="display: flex; gap: 8px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap;">
-                    <button class="nav-btn" onclick="document.getElementById('shelters').scrollIntoView()">🏥 Shelters</button>
-                    <button class="nav-btn" onclick="document.getElementById('radar').scrollIntoView()">🛰️ Radar</button>
-                    <button class="nav-btn" onclick="document.getElementById('fema').scrollIntoView()">📋 Recovery</button>
-                    <button class="nav-btn" onclick="document.getElementById('mental').scrollIntoView()">🧠 Mental Health</button>
-                </div>
-                
-                <div class="hotline-section">
-                    <div class="hotline-item"><strong>Emergency</strong><a href="tel:911" class="hotline-number">911</a></div>
-                    <div class="hotline-item"><strong>FL Emergency Info</strong><a href="tel:8003423557" class="hotline-number">1-800-342-3557</a></div>
-                    <div class="hotline-item"><strong>Disaster Distress</strong><a href="tel:8009855990" class="hotline-number">1-800-985-5990</a></div>
-                    <div class="hotline-item"><strong>Hurricane EM</strong><a href="tel:8838224636" class="hotline-number">(883) 822-4636</a></div>
-                    <div class="hotline-item"><strong>Crisis Support</strong><a href="tel:988" class="hotline-number">988</a></div>
-                </div>
-
-                <div id="shelters">
-                    <input type="text" id="searchInput" placeholder="Search by school name, city, or 'pets'..." oninput="filterTable()">
-                    <table>
-                        <thead>
-                            <tr><th>Shelter & Address</th><th>Status</th><th class="no-print">Map</th></tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            {% for shelter in shelters %}
-                            <tr>
-                                <td><strong>{{ shelter.name }}</strong><br><small style="color:#777">{{ shelter.address }}</small></td>
-                                <td><span class="badge {{ shelter.status }}">{{ shelter.label }}</span></td>
-                                <td class="no-print"><a href="https://www.google.com/maps/search/?api=1&query={{ shelter.name|replace(' ', '+') }}+{{ shelter.address|replace(' ', '+') }}" target="_blank" class="map-btn">📍 Map</a></td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shelter & Address</th>
+                            <th>Status</th>
+                            <th class="no-print">Map</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        {% for shelter in shelters %}
+                        <tr>
+                            <td>
+                                <strong>{{ shelter.name }}</strong><br>
+                                <small style="color:#777">{{ shelter.address }}</small>
+                                {% if shelter.dist %}
+                                    <br><span style="color:#2e7d32; font-weight:bold; font-size: 12px;">📍 {{ shelter.dist }} miles from you</span>
+                                {% endif %}
+                            </td>
+                            <td><span class="badge {{ shelter.status }}">{{ shelter.label }}</span></td>
+                            <td class="no-print">
+                                <a href="https://www.google.com/maps/search/{{ shelter.name|replace(' ', '+') }}+{{ shelter.address|replace(' ', '+') }}" target="_blank" class="map-btn">Map</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-
-            <div id="radar" class="card" style="padding: 0; overflow: hidden; border-top-color: #007bff;">
-                <div style="padding: 20px;">
-                    <h2 style="color: #007bff; margin: 0; font-size: 18px;">🛰️ Live Hurricane Radar</h2>
-                </div>
-                <iframe src="https://embed.windy.com/embed2.html?lat=27.9506&lon=-82.4572&zoom=6&level=surface&overlay=wind&product=ecmwf&metricWind=mph&metricTemp=%C2%B0F" width="100%" height="450" frameborder="0"></iframe>
-            </div>
-
-            <div id="fema" class="card" style="border-top-color: #c62828;">
-                <h2 style="color: #c62828;">🚩 Recovery & Disaster Assistance</h2>
-                <div class="tips-grid">
-                    <div class="tip-item" style="border-left-color: #c62828;"><strong>Wait for All-Clear:</strong> Only return home when officials say it's safe. Watch for downed power lines.</div>
-                    <div class="tip-item" style="border-left-color: #c62828;"><strong>FEMA Documentation:</strong> Take photos of ALL damage before you clean. Save every receipt.</div>
-                    <div class="tip-item" style="border-left-color: #c62828;"><strong>Licensed Pros:</strong> Always verify contractor licenses at (813) 272-5600 before repairs.</div>
-                </div>
-                <div style="margin-top: 20px;">
-                    <a href="https://www.disasterassistance.gov/" target="_blank" style="background: #c62828; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-block;">Start FEMA Application Online</a>
-                </div>
-            </div>
-
-            <div id="mental" class="card" style="border-top-color: #7b1fa2;">
-                <h2 style="color: #7b1fa2;">📚 Mental Well-being Resources</h2>
-                <p style="font-size: 14px; color: #555;">Tips from APA, Duke, FSU, and Tulane for coping with disaster stress.</p>
-                <div class="resource-grid">
-                    <a href="https://www.apa.org/topics/disasters-response/hurricane-stress" target="_blank" class="resource-card">
-                        <div>
-                            <span class="resource-tag" style="background: #f3e5f5; color: #7b1fa2;">APA</span>
-                            <strong style="display: block;">Coping Mechanisms</strong>
-                            <p style="font-size: 12px; color: #666;">Practical self-care and grieving advice from psychologists.</p>
-                        </div>
-                    </a>
-                    <a href="https://news.tulane.edu/pr/mental-health-experts-offer-coping-tips-well-being-after-storms-and-other-disasters" target="_blank" class="resource-card">
-                        <div>
-                            <span class="resource-tag" style="background: #e1f5fe; color: #0288d1;">Tulane</span>
-                            <strong style="display: block;">Student Well-being</strong>
-                            <p style="font-size: 12px; color: #666;">Advice on recognizing mental distress in students and peers.</p>
-                        </div>
-                    </a>
-                    <a href="https://emergency.fsu.edu/hazards/tropical-storms-hurricanes/tropical-storms-hurricanes-after" target="_blank" class="resource-card">
-                        <div>
-                            <span class="resource-tag" style="background: #fff3e0; color: #e65100;">FSU</span>
-                            <strong style="display: block;">Post-Storm Action</strong>
-                            <p style="font-size: 12px; color: #666;">Navigating the campus environment and finding reliable help.</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="card" style="border-top-color: #ff9800;">
-                <h2 style="color: #e65100;">🤝 Help Your Community</h2>
-                <div class="resource-grid">
-                    <a href="https://www.volunteerflorida.org/" target="_blank" class="resource-card">
-                        <strong>Volunteer Florida</strong>
-                        <p style="font-size: 12px; color: #666;">Official portal for storm-related volunteering.</p>
-                    </a>
-                    <a href="https://feedingtampabay.org/" target="_blank" class="resource-card">
-                        <strong>Feeding Tampa Bay</strong>
-                        <p style="font-size: 12px; color: #666;">Food security and emergency donations for West Florida.</p>
-                    </a>
-                </div>
-            </div>
-
         </div>
+
+        <div class="card" style="padding: 0; overflow: hidden; border-top-color: #007bff;">
+            <div style="padding: 20px;"><h2 style="color: #007bff; margin: 0; font-size: 18px;">🛰️ Live Hurricane Radar</h2></div>
+            <iframe src="https://embed.windy.com/embed2.html?lat=27.9506&lon=-82.4572&zoom=6&overlay=wind&product=ecmwf&metricWind=mph" width="100%" height="450" frameborder="0"></iframe>
+        </div>
+
+        <div class="card" style="border-top-color: #7b1fa2;">
+            <h2 style="color: #7b1fa2;">🧠 Recovery & Mental Health Resources</h2>
+            <div class="resource-grid">
+                <a href="https://www.disasterassistance.gov/" target="_blank" class="resource-card">
+                    <strong>FEMA Assistance</strong>
+                    <p style="font-size: 12px; color: #666;">Start claims and document property damage immediately.</p>
+                </a>
+                <a href="https://www.apa.org/topics/disasters-response/hurricane-stress" target="_blank" class="resource-card">
+                    <strong>Coping with Stress</strong>
+                    <p style="font-size: 12px; color: #666;">Practical coping mechanisms from the American Psychological Association.</p>
+                </a>
+                <a href="https://emergency.fsu.edu/hazards/tropical-storms-hurricanes/tropical-storms-hurricanes-after" target="_blank" class="resource-card">
+                    <strong>Post-Storm Safety</strong>
+                    <p style="font-size: 12px; color: #666;">Expert advice from FSU on navigating the post-hurricane environment.</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="card" style="border-top: none; background: #f1f8e9; text-align: center; padding: 20px;">
+            <p style="font-size: 12px; color: #555; margin: 0;">
+                <strong>Community Project:</strong> Developed to help Floridians find safety and support. 
+                Data sourced from official county emergency management and health experts.
+            </p>
+        </div>
+
     </div>
+</div>
 
-    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="no-print" style="position: fixed; bottom: 20px; right: 20px; background: #2e7d32; color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000;">↑</button>
+<script>
+    // Standard table filter logic
+    function filterTable() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#tableBody tr');
+        rows.forEach(row => {
+            row.style.display = row.innerText.toLowerCase().includes(query) ? '' : 'none';
+        });
+    }
+</script>
 
-    <script>
-        function filterTable() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const rows = document.getElementById('tableBody').querySelectorAll('tr');
-            rows.forEach(row => {
-                row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
-            });
-        }
-    </script>
 </body>
 </html>
