@@ -13,7 +13,8 @@
         /* Card System */
         .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); margin-bottom: 25px; border-top: 5px solid #2e7d32; }
         h1 { color: #2e7d32; text-align: center; margin-top: 0; margin-bottom: 10px; }
-        
+        h2 { margin-top: 0; font-size: 20px; color: #333; }
+
         /* Navigation & Buttons */
         .nav-btn { border: 1px solid #2e7d32; background: none; color: #2e7d32; padding: 12px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; transition: 0.3s; width: 100%; margin-bottom: 10px; }
         .nav-btn:hover { background: #2e7d32; color: white; }
@@ -26,23 +27,29 @@
         .hotline-number { color: #1b5e20; text-decoration: none; font-weight: bold; font-size: 15px; }
 
         /* Search & Table */
-        #searchInput { width: 100%; padding: 15px; border: 2px solid #a5d6a7; border-radius: 8px; margin-bottom: 20px; font-size: 16px; outline: none; box-sizing: border-box; }
+        .search-container { margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+        #searchInput { width: 100%; padding: 15px; border: 2px solid #a5d6a7; border-radius: 8px; font-size: 16px; outline: none; box-sizing: border-box; }
         table { width: 100%; border-collapse: collapse; }
         th { border-bottom: 2px solid #e8f5e9; padding: 12px; text-align: left; color: #666; font-size: 13px; }
         td { padding: 15px 12px; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
         
         /* Badges */
-        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
-        .accepting { background-color: #e6f4ea; color: #1b5e20; }
-        .full { background-color: #fdecea; color: #c62828; }
-        .nearingfull { background-color: #fff4e0; color: #e65100; }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; text-align: center; min-width: 80px; }
+        .badge-info { background-color: #e3f2fd; color: #0d47a1; } /* General */
+        .badge-pet { background-color: #fce4ec; color: #880e4f; } /* Pets */
+        .badge-sn { background-color: #fff3e0; color: #e65100; } /* Special Needs */
+        .badge-last { background-color: #fbe9e7; color: #bf360c; } /* Last Resort */
         
         .map-btn { text-decoration: none; background: white; color: #2e7d32; padding: 8px 14px; border: 1px solid #a5d6a7; border-radius: 6px; font-size: 12px; font-weight: bold; }
 
         /* Resource Grid */
         .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
-        .resource-card { border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; text-decoration: none; color: inherit; background: white; display: block; transition: 0.2s; }
+        .resource-card { border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; text-decoration: none; color: inherit; background: white; display: block; transition: 0.2s; border-left: 5px solid #ccc; }
         .resource-card:hover { border-color: #2e7d32; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transform: translateY(-2px); }
+
+        /* Mental Health Alert Styles */
+        .alert-box { background: #fff3e0; border: 2px solid #ff9800; padding: 20px; border-radius: 10px; margin-bottom: 25px; animation: slideIn 0.5s ease-out; }
+        @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         @media print {
             .no-print, button, form, #searchInput, iframe { display: none !important; }
@@ -58,7 +65,7 @@
         
         <div class="card">
             <h1>Florida Hurricane Relief Hub</h1>
-            <p style="text-align: center; color: #666; font-size: 13px;">Update Time: {{ user_time }}</p>
+            <p style="text-align: center; color: #666; font-size: 13px;">Last Updated: {{ user_time }}</p>
 
             <form id="geoForm" method="POST" action="/" class="no-print">
                 <input type="hidden" name="lat" id="lat">
@@ -67,91 +74,112 @@
                         onclick="navigator.geolocation.getCurrentPosition(pos => { 
                             document.getElementById('lat').value = pos.coords.latitude; 
                             document.getElementById('lon').value = pos.coords.longitude; 
-                            document.getElementById('geoBtn').innerText = '⌛ Calculating Nearest Shelters...';
+                            document.getElementById('geoBtn').innerText = '⌛ Sorting by Distance...';
                             document.getElementById('geoForm').submit(); 
-                        }, err => { alert('Please enable location services in your browser.'); })">
-                    📍 Find Closest Shelters (Use My GPS)
+                        }, err => { alert('Location permission denied. You can still search by name below.'); })">
+                    📍 Find Closest Shelters to Me (Use GPS)
                 </button>
             </form>
 
+            {% if show_alert %}
+            <div class="alert-box">
+                <strong style="color: #e65100; font-size: 18px;">🧡 We are here for you.</strong>
+                <p style="margin: 10px 0; color: #555;">Disasters can be overwhelming. If you are feeling stressed or anxious, please call or text <b>988</b> for free, 24/7 support. Expert university resources are located at the bottom of this page.</p>
+                <a href="#mental-health-section" style="color: #ff9800; font-weight: bold; text-decoration: none;">View Coping Strategies ↓</a>
+            </div>
+            {% endif %}
+
             <div class="hotline-section">
                 <div class="hotline-item"><strong>Emergency</strong><a href="tel:911" class="hotline-number">911</a></div>
-                <div class="hotline-item"><strong>FL Emergency Info</strong><a href="tel:8003423557" class="hotline-number">1-800-342-3557</a></div>
+                <div class="hotline-item"><strong>FL Emergency Info</strong><a href="tel:8003423557" class="hotline-number">800-342-3557</a></div>
                 <div class="hotline-item"><strong>Crisis Support</strong><a href="tel:988" class="hotline-number">988</a></div>
             </div>
 
-            <div id="shelters">
-                <input type="text" id="searchInput" class="no-print" placeholder="Search manually by school name or city..." oninput="filterTable()">
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Shelter & Address</th>
-                            <th>Status</th>
-                            <th class="no-print">Map</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        {% for shelter in shelters %}
-                        <tr>
-                            <td>
-                                <strong>{{ shelter.name }}</strong><br>
-                                <small style="color:#777">{{ shelter.address }}</small>
-                                {% if shelter.dist %}
-                                    <br><span style="color:#2e7d32; font-weight:bold; font-size: 12px;">📍 {{ shelter.dist }} miles from you</span>
-                                {% endif %}
-                            </td>
-                            <td><span class="badge {{ shelter.status }}">{{ shelter.label }}</span></td>
-                            <td class="no-print">
-                                <a href="https://www.google.com/maps/search/{{ shelter.name|replace(' ', '+') }}+{{ shelter.address|replace(' ', '+') }}" target="_blank" class="map-btn">Map</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="search-container no-print">
+                <form method="POST" action="/">
+                    <input type="text" name="q" id="searchInput" placeholder="Search school name, city, or type 'Pets' / 'Special Needs'..." oninput="filterTable()">
+                    <button type="submit" style="display:none;">Search</button>
+                </form>
             </div>
+                
+            <table>
+                <thead>
+                    <tr>
+                        <th>Shelter & Address</th>
+                        <th>Category</th>
+                        <th class="no-print">Map</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    {% for shelter in shelters %}
+                    <tr>
+                        <td>
+                            <strong>{{ shelter.name }}</strong><br>
+                            <small style="color:#777">{{ shelter.address }}</small>
+                            {% if shelter.dist %}
+                                <br><span style="color:#2e7d32; font-weight:bold; font-size: 12px;">📍 {{ shelter.dist }} miles away</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 'Pets' in shelter.label %}
+                                <span class="badge badge-pet">{{ shelter.label }}</span>
+                            {% elif 'Special' in shelter.label %}
+                                <span class="badge badge-sn">{{ shelter.label }}</span>
+                            {% elif 'Resort' in shelter.label %}
+                                <span class="badge badge-last">{{ shelter.label }}</span>
+                            {% else %}
+                                <span class="badge badge-info">{{ shelter.label }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="no-print">
+                            <a href="https://www.google.com/maps/search/{{ shelter.name|replace(' ', '+') }}+{{ shelter.address|replace(' ', '+') }}" target="_blank" class="map-btn">Map</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
 
         <div class="card" style="padding: 0; overflow: hidden; border-top-color: #007bff;">
-            <div style="padding: 20px;"><h2 style="color: #007bff; margin: 0; font-size: 18px;">🛰️ Live Hurricane Radar</h2></div>
+            <div style="padding: 20px;"><h2 style="color: #007bff; margin: 0;">🛰️ Live Hurricane Radar</h2></div>
             <iframe src="https://embed.windy.com/embed2.html?lat=27.9506&lon=-82.4572&zoom=6&overlay=wind&product=ecmwf&metricWind=mph" width="100%" height="450" frameborder="0"></iframe>
         </div>
 
-        <div class="card" style="border-top-color: #7b1fa2;">
-            <h2 style="color: #7b1fa2;">🧠 Recovery & Mental Health Resources</h2>
+        <div id="mental-health-section" class="card" style="border-top-color: #7b1fa2; background-color: #f3e5f540;">
+            <h2 style="color: #7b1fa2;">🧠 Expert Recovery & Mental Health</h2>
+            <p style="font-size: 14px; color: #666;">Scientifically-backed resources to help you and your family cope with the stress of disaster recovery.</p>
+            
             <div class="resource-grid">
-                <a href="https://www.disasterassistance.gov/" target="_blank" class="resource-card">
+                <a href="https://www.apa.org/topics/disasters-response/hurricane-stress" target="_blank" class="resource-card" style="border-left-color: #7b1fa2;">
+                    <strong>APA: Stress Management</strong>
+                    <p style="font-size: 12px; color: #555;">Official tips from the American Psychological Association on managing trauma.</p>
+                </a>
+                <a href="https://news.tulane.edu/pr/mental-health-experts-offer-coping-tips-well-being-after-storms-and-other-disasters" target="_blank" class="resource-card" style="border-left-color: #9c27b0;">
+                    <strong>Tulane University Guide</strong>
+                    <p style="font-size: 12px; color: #555;">Resilience training for families after displacement.</p>
+                </a>
+                <a href="https://www.disasterassistance.gov/" target="_blank" class="resource-card" style="border-left-color: #2e7d32;">
                     <strong>FEMA Assistance</strong>
-                    <p style="font-size: 12px; color: #666;">Start claims and document property damage immediately.</p>
-                </a>
-                <a href="https://www.apa.org/topics/disasters-response/hurricane-stress" target="_blank" class="resource-card">
-                    <strong>Coping with Stress</strong>
-                    <p style="font-size: 12px; color: #666;">Practical coping mechanisms from the American Psychological Association.</p>
-                </a>
-                <a href="https://emergency.fsu.edu/hazards/tropical-storms-hurricanes/tropical-storms-hurricanes-after" target="_blank" class="resource-card">
-                    <strong>Post-Storm Safety</strong>
-                    <p style="font-size: 12px; color: #666;">Expert advice from FSU on navigating the post-hurricane environment.</p>
+                    <p style="font-size: 12px; color: #555;">Essential links for financial recovery and damage claims.</p>
                 </a>
             </div>
-        </div>
-
-        <div class="card" style="border-top: none; background: #f1f8e9; text-align: center; padding: 20px;">
-            <p style="font-size: 12px; color: #555; margin: 0;">
-                <strong>Community Project:</strong> Developed to help Floridians find safety and support. 
-                Data sourced from official county emergency management and health experts.
-            </p>
+            
+            <div style="margin-top: 20px; text-align: center; border-top: 1px solid #ddd; padding-top: 15px;">
+                <small style="color: #7b1fa2; font-weight: bold;">Immediate Help: Text or Call 988 (National Crisis Lifeline)</small>
+            </div>
         </div>
 
     </div>
 </div>
 
 <script>
-    // Standard table filter logic
+    // Client-side search logic
     function filterTable() {
         const query = document.getElementById('searchInput').value.toLowerCase();
         const rows = document.querySelectorAll('#tableBody tr');
         rows.forEach(row => {
-            row.style.display = row.innerText.toLowerCase().includes(query) ? '' : 'none';
+            const text = row.innerText.toLowerCase();
+            row.style.display = text.includes(query) ? '' : 'none';
         });
     }
 </script>
