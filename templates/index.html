@@ -134,13 +134,29 @@
             </a>
         </div>
 
-    </div> </div> <script>
-    function filterTable() {
-        let q = document.getElementById('searchInput').value.toLowerCase();
-        document.querySelectorAll('#tableBody tr').forEach(r => {
-            r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
-        });
-    }
+    </div>
+
+        <div class="card" style="border-top-color: #fbc02d; background: #fffde7;">
+            <h2 style="color: #f57f17;">📋 Share Your Shelter Experience</h2>
+            <p style="font-size: 14px; color: #333;">Did you stay in a shelter? Your feedback helps local officials improve safety, supplies, and staffing.</p>
+            <div style="background: white; border: 1px solid #fff176; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center;">
+                <p style="font-size: 12px; margin-bottom: 10px;"><b>Scan the QR code at the top-right</b> or click below.</p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdn8_t7mAn2P82-C_N2M70xH78S6xO86Xm_Iu53m0I2m5O56A/viewform?usp=header" 
+                   target="_blank" 
+                   class="nav-btn" 
+                   style="background: #fbc02d; color: #333; border: none; font-weight: bold;">
+                   Start Shelter Survey
+                </a>
+            </div>
+        </div>
+        </div> </div> <script>
+function filterTable() {
+    let q = document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('#tableBody tr').forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+    });
+}
 </script>
+
 </body>
 </html>
