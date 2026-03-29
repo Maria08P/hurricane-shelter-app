@@ -7,82 +7,77 @@
     <style>
         html, body { margin: 0; background-color: #f1f8e9; font-family: 'Segoe UI', sans-serif; line-height: 1.4; }
         .page-wrapper { padding: 30px 15px; display: flex; justify-content: center; }
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; } /* Added relative position */
         .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px; border-top: 6px solid #2e7d32; }
         h1 { color: #2e7d32; text-align: center; margin-bottom: 5px; }
         h2 { color: #1b5e20; margin-top: 0; }
         .nav-btn { background: #2e7d32; color: white; padding: 14px; border: none; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; text-decoration: none; display: block; text-align: center; box-sizing: border-box; margin-bottom: 10px; }
         .print-btn { background: #455a64; }
-        .hotline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; background: #e8f5e9; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .hotline-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; background: #f9fdf9; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px; }
         .hotline-item b { font-size: 10px; color: #2e7d32; text-transform: uppercase; }
-        .hotline-item a { display: block; color: #1b5e20; text-decoration: none; font-weight: bold; }
+        .hotline-item a { display: block; color: #1b5e20; text-decoration: none; font-weight: bold; font-size: 13px; }
         table { width: 100%; border-collapse: collapse; }
         td { padding: 12px 8px; border-bottom: 1px solid #eee; font-size: 14px; }
         .badge { padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; }
         .badge-pet { background: #fce4ec; color: #880e4f; }
         .badge-sn { background: #fff3e0; color: #e65100; }
-        /* QR Code Container (Top-Right) */
-        .qr-code-share { position: absolute; top: 10px; right: 10px; text-align: center; background: white; padding: 5px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: 60px; z-index: 1000; }
+        
+        /* QR Code Container */
+        .qr-code-share { position: absolute; top: 10px; right: 20px; text-align: center; background: white; padding: 5px; border-radius: 8px; border: 1px solid #ddd; width: 90px; z-index: 1000; }
         .qr-code-share img { width: 100%; display: block; }
-        .qr-code-share small { font-size: 8px; color: #666; font-weight: bold; }
-
-        /* Review Grid */
-        .review-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 15px; }
-        .review-box { border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: #fcfcfc; }
+        
         @media print { .no-print { display: none !important; } .card { box-shadow: none; border: 1px solid #ccc; } }
     </style>
 </head>
 <body>
+
 <div class="container">
-    <div style="position: absolute; top: 10px; right: 10px; background: white; padding: 5px; border-radius: 8px; border: 1px solid #ddd; text-align: center; width: 90px; z-index: 1000;" class="no-print">
-        <img src="/qr_code" alt="Survey QR" style="width: 100%;">
+    <div class="qr-code-share no-print">
+        <img src="/qr_code" alt="Survey QR">
         <p style="font-size: 8px; margin: 2px 0; color: #d32f2f; font-weight: bold;">SCAN FOR SURVEY</p>
     </div>
 
     <div class="card">
         <h1>Florida Hurricane Relief Hub</h1>
-        <p style="text-align: center; font-size: 11px; color: #999;">Source: hss-ppcu.onrender.com</p>
+        <p style="text-align: center; font-size: 11px; color: #999;">Source: hss-ppcu.onrender.com | Last Check: {{ user_time }}</p>
         
         <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
             <form id="geoForm" method="POST" action="/" style="margin: 0;">
                 <input type="hidden" name="lat" id="lat"><input type="hidden" name="lon" id="lon">
-                <button type="button" class="nav-btn" style="margin: 0; background: #2e7d32; color: white;" onclick="navigator.geolocation.getCurrentPosition(pos => { document.getElementById('lat').value = pos.coords.latitude; document.getElementById('lon').value = pos.coords.longitude; document.getElementById('geoForm').submit(); })">
+                <button type="button" class="nav-btn" style="margin: 0;" onclick="navigator.geolocation.getCurrentPosition(pos => { document.getElementById('lat').value = pos.coords.latitude; document.getElementById('lon').value = pos.coords.longitude; document.getElementById('geoForm').submit(); })">
                     📍 Closest Shelters (GPS)
                 </button>
             </form>
-            <button class="nav-btn" style="background: #455a64; color: white; border: none; margin: 0;" onclick="window.print()">
-                📥 Save / Print PDF
-            </button>
+            <button class="nav-btn print-btn" style="margin: 0;" onclick="window.print()">📥 Save / Print PDF</button>
         </div>
 
-        <div class="hotline-section" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; background: #f9fdf9; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px;">
-            <div class="hotline-item"><b>911</b><br><a href="tel:911" style="color: #1b5e20; text-decoration: none; font-size: 13px;">Emergency</a></div>
-            <div class="hotline-item"><b>800-342-3557</b><br><a href="tel:8003423557" style="color: #1b5e20; text-decoration: none; font-size: 13px;">State Info</a></div>
-            <div class="hotline-item"><b>813-272-5900</b><br><a href="tel:8132725900" style="color: #1b5e20; text-decoration: none; font-size: 13px;">Hillsborough</a></div>
-            <div class="hotline-item"><b>988</b><br><a href="tel:988" style="color: #1b5e20; text-decoration: none; font-size: 13px;">Mental Health</a></div>
-            <div class="hotline-item"><b>800-621-3362</b><br><a href="tel:8006213362" style="color: #1b5e20; text-decoration: none; font-size: 13px;">FEMA</a></div>
-            <div class="hotline-item"><b>800-733-2767</b><br><a href="tel:8007332767" style="color: #1b5e20; text-decoration: none; font-size: 13px;">Red Cross</a></div>
+        <div class="hotline-section">
+            <div class="hotline-item"><b>911</b><a href="tel:911">Emergency</a></div>
+            <div class="hotline-item"><b>800-342-3557</b><a href="tel:8003423557">State Info</a></div>
+            <div class="hotline-item"><b>813-272-5900</b><a href="tel:8132725900">Hillsborough</a></div>
+            <div class="hotline-item"><b>988</b><a href="tel:988">Mental Health</a></div>
+            <div class="hotline-item"><b>800-621-3362</b><a href="tel:8006213362">FEMA</a></div>
+            <div class="hotline-item"><b>800-733-2767</b><a href="tel:8007332767">Red Cross</a></div>
         </div>
 
         <input type="text" id="searchInput" class="no-print" style="width:100%; padding:14px; border:2px solid #2e7d32; border-radius:8px; box-sizing: border-box;" placeholder="Type here to search 66 shelters..." oninput="filterTable()">
     </div>
 
-        {% if show_alert %}
-        <div style="background:#e3f2fd; border-left:5px solid #2196f3; padding:15px; margin-bottom:20px;">
-            <b>🛠️ Recovery Assistant Active:</b><br>
-            <small>Need to apply for FEMA? Visit <b>DisasterAssistance.gov</b> or call the hotline above. Ensure you have photos of damage ready before cleaning.</small>
-        </div>
-        {% endif %}
+    {% if show_alert %}
+    <div style="background:#e3f2fd; border-left:5px solid #2196f3; padding:15px; margin-bottom:20px;">
+        <b>🛠️ Recovery Assistant Active:</b><br>
+        <small>Need to apply for FEMA? Visit <b>DisasterAssistance.gov</b>. Ensure you have photos of damage ready.</small>
+    </div>
+    {% endif %}
 
-        <input type="text" id="searchInput" class="no-print" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px;" placeholder="Search 66 shelters by name or type 'pet'..." oninput="filterTable()">
-        
+    <div class="card">
         <table>
             <tbody id="tableBody">
                 {% for s in shelters %}
                 <tr>
                     <td><b>{{ s.name }}</b><br><small>{{ s.address }}</small>{% if s.dist %}<br><span style="color:green; font-weight:bold;">📍 {{ s.dist }} mi</span>{% endif %}</td>
                     <td>{% if 'Pet' in s.label %}<span class="badge badge-pet">PETS OK</span>{% elif 'Special' in s.label %}<span class="badge badge-sn">MEDICAL</span>{% else %}<span class="badge" style="background:#f5f5f5;">GENERAL</span>{% endif %}</td>
-                    <td class="no-print"><a href="http://maps.google.com/?q={{ s.name|replace(' ', '+') }}+{{ s.address|replace(' ', '+') }}" target="_blank" style="color:#2e7d32; font-weight:bold; font-size:12px;">Map</a></td>
+                    <td class="no-print"><a href="https://www.google.com/maps/search/{{ s.name|replace(' ', '+') }}+{{ s.address|replace(' ', '+') }}" target="_blank" style="color:#2e7d32; font-weight:bold; font-size:12px;">Map</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -96,60 +91,43 @@
 
     <div class="card" style="border-top-color: #f57c00;">
         <h2>📋 FEMA & Financial Steps</h2>
-        <div style="font-size:14px;">
-            <p>1. <b>Document:</b> Photos of damage before any repairs.</p>
-            <p>2. <b>Apply:</b> Online at DisasterAssistance.gov.</p>
-            <p>3. <b>Receipts:</b> Save every receipt for food, hotels, and nails.</p>
-            <a href="https://www.fema.gov/assistance/individual/program" target="_blank" class="nav-btn" style="background:#ef6c00;">Open FEMA Portal</a>
+        <p style="font-size:14px;">1. <b>Document:</b> Photos of damage. 2. <b>Apply:</b> DisasterAssistance.gov. 3. <b>Receipts:</b> Save everything.</p>
+        <a href="https://www.fema.gov/assistance/individual/program" target="_blank" class="nav-btn" style="background:#ef6c00;">Open FEMA Portal</a>
+    </div>
+
+    <div class="card" style="border-top-color: #00897b; background: #e0f2f150;">
+        <h2 style="color: #00695c;">🤝 Community Help</h2>
+        <ul style="font-size: 13px; color: #444;">
+            <li>Check on elderly neighbors.</li>
+            <li>Clear street drains.</li>
+        </ul>
+        <a href="https://www.ready.gov/plan-for-locations#neighbors" target="_blank" class="nav-btn" style="background: #00897b;">Build a Neighbor Network</a>
+    </div>
+
+    <div class="card" style="border-top-color: #7b1fa2; background: #f3e5f540;">
+        <h2 style="color: #4a148c;">🧠 Mental Health Support</h2>
+        <div style="display: flex; gap: 10px;">
+            <a href="https://www.apa.org/topics/disasters-response/hurricane-stress" target="_blank" class="nav-btn" style="flex: 1; font-size: 12px;">APA Stress Guide</a>
+            <a href="https://news.tulane.edu/pr/mental-health-experts-offer-coping-tips-well-being-after-storms-and-other-disasters" target="_blank" class="nav-btn" style="flex: 1; font-size: 12px;">Tulane Resilience</a>
+        </div>
+        <div style="margin-top: 10px; background: #7b1fa2; color: white; padding: 10px; border-radius: 8px; text-align: center;">
+            <small>Need to talk? <b>Call/Text 988</b></small>
         </div>
     </div>
 
-<div class="card" style="border-top-color: #00897b; background: #e0f2f150;">
-            <h2 style="color: #00695c;">🤝 Community: Help Your Neighbor</h2>
-            <ul style="font-size: 13px; line-height: 1.6; color: #444; padding-left: 20px;">
-                <li>Check on elderly or disabled neighbors who live alone.</li>
-                <li>Clear street drains to prevent local flooding.</li>
-                <li>Offer extra water or supplies if you have them.</li>
-            </ul>
-            <a href="https://www.ready.gov/plan-for-locations#neighbors" target="_blank" class="nav-btn" style="background: #00897b; color: white; border: none;">Build a Neighbor Network</a>
-        </div>
-
-        <div id="mental-health-section" class="card" style="border-top-color: #7b1fa2; background: #f3e5f540;">
-            <h2 style="color: #4a148c;">🧠 Mental Health Support</h2>
-            <p style="font-size: 13px; color: #555;">Resources from <b>APA</b> and <b>Tulane</b> to help manage stress.</p>
-            <div style="display: flex; gap: 10px;">
-                <a href="https://www.apa.org/topics/disasters-response/hurricane-stress" target="_blank" class="nav-btn" style="background-color: #2e7d32; color: #ffffff; border: none; font-size: 12px; flex: 1; font-weight: bold;">APA Stress Guide</a>
-                <a href="https://news.tulane.edu/pr/mental-health-experts-offer-coping-tips-well-being-after-storms-and-other-disasters" target="_blank" class="nav-btn" style="background-color: #2e7d32; color: #ffffff; border: none; font-size: 12px; flex: 1; font-weight: bold;">Tulane Resilience</a>
-            </div>
-            <div style="margin-top: 15px; background: #7b1fa2; color: white; padding: 12px; border-radius: 8px; text-align: center;">
-                <small>Need to talk? <b>Call or Text 988</b> (24/7 Crisis Support)</small>
-            </div>
-        </div>
-
-        <div class="card" style="border-top-color: #455a64; text-align: center;">
-            <h2 style="color: #37474f;">🛰️ More Shelter Details</h2>
-            <p style="font-size: 13px; color: #666;">View user reviews and detailed facility info on our companion app.</p>
-            <a href="https://stormsafe-hurricane-shelter-finder-581021306710.us-west1.run.app/" target="_blank" class="nav-btn" style="background: #455a64; color: white; border: none;">
-                Open Shelter App (Reviews & More)
-            </a>
-        </div>
-
+    <div class="card" style="border-top-color: #455a64; text-align: center;">
+        <h2 style="color: #37474f;">🛰️ More Shelter Details</h2>
+        <p style="font-size: 13px;">View user reviews on our companion app.</p>
+        <a href="https://stormsafe-hurricane-shelter-finder-581021306710.us-west1.run.app/" target="_blank" class="nav-btn" style="background: #455a64;">Open Shelter App</a>
     </div>
 
-        <div class="card" style="border-top-color: #fbc02d; background: #fffde7;">
-            <h2 style="color: #f57f17;">📋 Share Your Shelter Experience</h2>
-            <p style="font-size: 14px; color: #333;">Did you stay in a shelter? Your feedback helps local officials improve safety, supplies, and staffing.</p>
-            <div style="background: white; border: 1px solid #fff176; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center;">
-                <p style="font-size: 12px; margin-bottom: 10px;"><b>Scan the QR code at the top-right</b> or click below.</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdn8_t7mAn2P82-C_N2M70xH78S6xO86Xm_Iu53m0I2m5O56A/viewform?usp=header" 
-                   target="_blank" 
-                   class="nav-btn" 
-                   style="background: #fbc02d; color: #333; border: none; font-weight: bold;">
-                   Start Shelter Survey
-                </a>
-            </div>
-        </div>
-        </div> </div> <script>
+    <div class="card" style="border-top-color: #fbc02d; background: #fffde7;">
+        <h2 style="color: #f57f17;">📋 Share Your Experience</h2>
+        <p style="font-size: 14px;">Did you stay in a shelter? Help officials improve safety and staffing.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdn8_t7mAn2P82-C_N2M70xH78S6xO86Xm_Iu53m0I2m5O56A/viewform?usp=header" target="_blank" class="nav-btn" style="background: #fbc02d; color: #333;">Start Shelter Survey</a>
+    </div>
+
+</div> <script>
 function filterTable() {
     let q = document.getElementById('searchInput').value.toLowerCase();
     document.querySelectorAll('#tableBody tr').forEach(r => {
