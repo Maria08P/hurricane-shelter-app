@@ -22,37 +22,6 @@
         @media print { .no-print { display: none !important; } .card { box-shadow: none; border: 1px solid #ccc; } }
     </style>
 </head>
-    <div class="card" style="border-top-color: #d32f2f; padding: 0; overflow: hidden;">
-            <div style="padding: 20px;">
-                <h2 style="color: #c62828; margin: 0;">🗺️ Interactive Shelter Finder (External)</h2>
-                <p style="font-size: 13px; color: #666;">Use this live map tool for real-time GPS routing and state-wide updates.</p>
-            </div>
-            
-            <div style="width: 100%; height: 600px; -webkit-overflow-scrolling: touch; overflow-y: auto;">
-                <iframe 
-                    src="https://stormsafe-hurricane-shelter-finder-581021306710.us-west1.run.app/" 
-                    width="100%" 
-                    height="100%" 
-                    style="border: none;"
-                    title="StormSafe Shelter Finder">
-                </iframe>
-            </div>
-            
-            <div style="padding: 10px; background: #ffebee; text-align: center;">
-                <small style="color: #c62828;"><b>Note:</b> This map is provided by StormSafe. For local Hillsborough school details, refer to the table above.</small>
-            </div>
-        </div>
-        </div> </div> <script>
-    // Keeping your existing search filter script
-    function filterTable() {
-        let q = document.getElementById('searchInput').value.toLowerCase();
-        document.querySelectorAll('#tableBody tr').forEach(r => {
-            r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
-        });
-    }
-</script>
-</body>
-</html>
 <body>
 <div class="container">
     <div class="card">
