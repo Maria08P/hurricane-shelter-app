@@ -2,7 +2,7 @@ import math
 import os
 import qrcode
 import io
-from flask import send_file, request
+from flask import Flask, render_template, send_file, request
 from datetime import datetime
 
 app = Flask(__name__)
@@ -95,16 +95,19 @@ SHELTERS = [
 ]
 @app.route('/qr_code')
 def qr_code():
-    # Points the QR code to your Survey Link as requested
+    # Points the QR code to your Survey Link
     survey_url = "https://docs.google.com/forms/d/e/1FAIpQLSdn8_t7mAn2P82-C_N2M70xH78S6xO86Xm_Iu53m0I2m5O56A/viewform?usp=header"
     
     qr = qrcode.QRCode(version=1, box_size=10, border=2)
     qr.add_data(survey_url)
     qr.make(fit=True)
+    
+    # Create the image
     img = qr.make_image(fill_color="black", back_color="white")
     
+    # Save to buffer
     buf = io.BytesIO()
-    img.save(buf)
+    img.save(buf, format='PNG') # <-- FIXED: Added explicit PNG format
     buf.seek(0)
     return send_file(buf, mimetype='image/png')
 def calculate_distance(lat1, lon1, lat2, lon2):
