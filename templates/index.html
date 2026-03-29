@@ -34,19 +34,19 @@
 </head>
 <body>
 <div class="container">
-    <div style="position: absolute; top: 10px; right: 10px; background: white; padding: 5px; border-radius: 8px; border: 1px solid #ddd; text-align: center; width: 80px;" class="no-print">
-        <img src="/qr_code" alt="Scan to Share" style="width: 100%;">
-        <p style="font-size: 8px; margin: 2px 0; color: #666; font-weight: bold;">SCAN TO SHARE</p>
+    <div style="position: absolute; top: 10px; right: 10px; background: white; padding: 5px; border-radius: 8px; border: 1px solid #ddd; text-align: center; width: 90px; z-index: 1000;" class="no-print">
+        <img src="/qr_code" alt="Survey QR" style="width: 100%;">
+        <p style="font-size: 8px; margin: 2px 0; color: #d32f2f; font-weight: bold;">SCAN FOR SURVEY</p>
     </div>
 
     <div class="card">
         <h1>Florida Hurricane Relief Hub</h1>
-        <p style="text-align: center; font-size: 11px; color: #999; margin-bottom: 20px;">Last Check: {{ user_time }}</p>
+        <p style="text-align: center; font-size: 11px; color: #999;">Source: hss-ppcu.onrender.com</p>
         
         <div class="no-print" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
             <form id="geoForm" method="POST" action="/" style="margin: 0;">
                 <input type="hidden" name="lat" id="lat"><input type="hidden" name="lon" id="lon">
-                <button type="button" class="nav-btn" style="margin: 0;" onclick="navigator.geolocation.getCurrentPosition(pos => { document.getElementById('lat').value = pos.coords.latitude; document.getElementById('lon').value = pos.coords.longitude; document.getElementById('geoForm').submit(); })">
+                <button type="button" class="nav-btn" style="margin: 0; background: #2e7d32; color: white;" onclick="navigator.geolocation.getCurrentPosition(pos => { document.getElementById('lat').value = pos.coords.latitude; document.getElementById('lon').value = pos.coords.longitude; document.getElementById('geoForm').submit(); })">
                     📍 Closest Shelters (GPS)
                 </button>
             </form>
@@ -55,16 +55,16 @@
             </button>
         </div>
 
-        <div class="hotline-section">
-            <div class="hotline-item"><strong>911</strong><br><a href="tel:911" class="hotline-number">Emergency</a></div>
-            <div class="hotline-item"><strong>800-342-3557</strong><br><a href="tel:8003423557" class="hotline-number">State Info</a></div>
-            <div class="hotline-item"><strong>813-272-5900</strong><br><a href="tel:8132725900" class="hotline-number">Hillsborough</a></div>
-            <div class="hotline-item"><strong>988</strong><br><a href="tel:988" class="hotline-number">Mental Health</a></div>
-            <div class="hotline-item"><strong>800-621-3362</strong><br><a href="tel:8006213362" class="hotline-number">FEMA</a></div>
-            <div class="hotline-item"><strong>800-733-2767</strong><br><a href="tel:8007332767" class="hotline-number">Red Cross</a></div>
+        <div class="hotline-section" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; background: #f9fdf9; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px;">
+            <div class="hotline-item"><b>911</b><br><a href="tel:911" style="color: #1b5e20; text-decoration: none; font-size: 13px;">Emergency</a></div>
+            <div class="hotline-item"><b>800-342-3557</b><br><a href="tel:8003423557" style="color: #1b5e20; text-decoration: none; font-size: 13px;">State Info</a></div>
+            <div class="hotline-item"><b>813-272-5900</b><br><a href="tel:8132725900" style="color: #1b5e20; text-decoration: none; font-size: 13px;">Hillsborough</a></div>
+            <div class="hotline-item"><b>988</b><br><a href="tel:988" style="color: #1b5e20; text-decoration: none; font-size: 13px;">Mental Health</a></div>
+            <div class="hotline-item"><b>800-621-3362</b><br><a href="tel:8006213362" style="color: #1b5e20; text-decoration: none; font-size: 13px;">FEMA</a></div>
+            <div class="hotline-item"><b>800-733-2767</b><br><a href="tel:8007332767" style="color: #1b5e20; text-decoration: none; font-size: 13px;">Red Cross</a></div>
         </div>
 
-        <input type="text" id="searchInput" class="no-print" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box;" placeholder="Search 66 shelters by name or type 'pet'..." oninput="filterTable()">
+        <input type="text" id="searchInput" class="no-print" style="width:100%; padding:14px; border:2px solid #2e7d32; border-radius:8px; box-sizing: border-box;" placeholder="Type here to search 66 shelters..." oninput="filterTable()">
     </div>
 
         {% if show_alert %}
