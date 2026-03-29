@@ -1,5 +1,7 @@
 import math
 import os
+import io  # <-- QR Code import
+import qrcode  # <-- QR code import
 from flask import Flask, render_template, request
 from datetime import datetime
 
@@ -91,7 +93,21 @@ SHELTERS = [
     {"name": "Seminole Hard Rock Casino", "address": "5223 Orient Rd., Tampa", "lat": 27.9958, "lon": -82.3712, "label": "⚠️ Last Resort"},
     {"name": "BayCare (Old B&N)", "address": "11802 N. Dale Mabry Hwy., Tampa", "lat": 28.0525, "lon": -82.5012, "label": "⚠️ Last Resort"}
 ]
-
+@app.route('/share_qr.png')
+def get_qr():
+    """Generates a QR code image that points to the current page."""
+    # We use request.url_root so it dynamically adapts to your Render domain.
+    base_url = request.url_root 
+    
+    # Generate QR with high error correction (so it still scans if partially obscured)
+    img = qrcode.make(base_url, border=1)
+    
+    # Save the image to an in-memory byte stream (no temp file needed)
+    img_io = io.BytesIO()
+    img.save(img_io, 'PNG')
+    img_io.seek(0)
+    
+    return send_file(img_io, mimetype='image/png')
 def calculate_distance(lat1, lon1, lat2, lon2):
     p = math.pi/180
     a = 0.5 - math.cos((lat2-lat1)*p)/2 + math.cos(lat1*p) * math.cos(lat2*p) * (1-math.cos((lon2-lon1)*p))/2
