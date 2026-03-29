@@ -96,7 +96,7 @@ SHELTERS = [
 @app.route('/qr_code')
 def qr_code():
     # THIS MUST BE THE GOOGLE FORM LINK, NOT THE RENDER LINK
-    survey_url = "https://docs.google.com/forms/d/e/1FAIpQLSdn8_t7mAn2P82-C_N2M70xH78S6xO86Xm_Iu53m0I2m5O56A/viewform?usp=header"
+    survey_url = "https://hss-ppcu.onrender.com"
     
     qr = qrcode.QRCode(version=1, box_size=10, border=2)
     qr.add_data(survey_url)
