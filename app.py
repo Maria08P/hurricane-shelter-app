@@ -2,7 +2,7 @@ import math
 import os
 import qrcode
 import io
-from flask import Flask, render_template, request
+from flask import send_file, request
 from datetime import datetime
 
 app = Flask(__name__)
@@ -95,7 +95,7 @@ SHELTERS = [
 ]
 @app.route('/qr_code')
 def qr_code():
-    # UPDATED: Points directly to your survey link
+    # Points the QR code to your Survey Link as requested
     survey_url = "https://docs.google.com/forms/d/e/1FAIpQLSdn8_t7mAn2P82-C_N2M70xH78S6xO86Xm_Iu53m0I2m5O56A/viewform?usp=header"
     
     qr = qrcode.QRCode(version=1, box_size=10, border=2)
