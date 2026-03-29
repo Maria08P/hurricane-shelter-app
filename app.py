@@ -95,10 +95,11 @@ SHELTERS = [
 ]
 @app.route('/qr_code')
 def qr_code():
-    # This generates a QR code for your specific Render URL
-    url = request.url_root
+    # UPDATED: Points directly to your survey link
+    survey_url = "https://docs.google.com/forms/d/e/1FAIpQLSdn8_t7mAn2P82-C_N2M70xH78S6xO86Xm_Iu53m0I2m5O56A/viewform?usp=header"
+    
     qr = qrcode.QRCode(version=1, box_size=10, border=2)
-    qr.add_data(url)
+    qr.add_data(survey_url)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
     
@@ -106,8 +107,6 @@ def qr_code():
     img.save(buf)
     buf.seek(0)
     return send_file(buf, mimetype='image/png')
-    
-    return send_file(img_io, mimetype='image/png')
 def calculate_distance(lat1, lon1, lat2, lon2):
     p = math.pi/180
     a = 0.5 - math.cos((lat2-lat1)*p)/2 + math.cos(lat1*p) * math.cos(lat2*p) * (1-math.cos((lon2-lon1)*p))/2
