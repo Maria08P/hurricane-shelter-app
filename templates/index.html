@@ -82,37 +82,33 @@
 
 <div class="card" style="border-top-color: #00897b; background: #e0f2f150;">
             <h2 style="color: #00695c;">🤝 Community: Help Your Neighbor</h2>
-            <p style="font-size: 14px; color: #333;">Recovery is faster when we look out for each other. Use this checklist to support your street:</p>
-            <ul style="font-size: 13px; line-height: 1.6; color: #444;">
-                <li><b>Elderly/Disabled:</b> Check on neighbors who live alone or have mobility issues.</li>
-                <li><b>Debris:</b> Help clear storm drains to prevent localized street flooding.</li>
-                <li><b>Resources:</b> If you have extra water or a working chainsaw, offer a hand.</li>
+            <ul style="font-size: 13px; line-height: 1.6; color: #444; padding-left: 20px;">
+                <li>Check on elderly or disabled neighbors who live alone.</li>
+                <li>Clear street drains to prevent local flooding.</li>
+                <li>Offer extra water or supplies if you have them.</li>
             </ul>
-            <a href="https://www.ready.gov/neighbors" target="_blank" class="nav-btn" style="background: #00897b; color: white; border: none;">Learn to Build a Neighbor Network</a>
+            <a href="https://www.ready.gov/plan-for-locations#neighbors" target="_blank" class="nav-btn" style="background: #00897b; color: white; border: none;">Build a Neighbor Network</a>
         </div>
 
-       <div id="mental-health-section" class="card" style="border-top-color: #7b1fa2; background: #f3e5f540;">
-    <h2 style="color: #4a148c;">🧠 Mental Health Support</h2>
-    <p style="font-size: 13px; color: #555;">Resources from <b>APA</b> and <b>Tulane</b> to help manage disaster-related trauma.</p>
-    
-    <div style="display: flex; gap: 10px; margin-top: 10px;">
-        <a href="https://www.apa.org/topics/disasters-response/hurricane-stress" target="_blank" 
-           class="nav-btn" 
-           style="background-color: #2e7d32; color: #ffffff; border: none; font-size: 12px; flex: 1; font-weight: bold;">
-           APA Stress Guide
-        </a>
-        
-        <a href="https://news.tulane.edu/pr/mental-health-experts-offer-coping-tips-well-being-after-storms-and-other-disasters" target="_blank" 
-           class="nav-btn" 
-           style="background-color: #2e7d32; color: #ffffff; border: none; font-size: 12px; flex: 1; font-weight: bold;">
-           Tulane Resilience
-        </a>
-    </div>
+        <div id="mental-health-section" class="card" style="border-top-color: #7b1fa2; background: #f3e5f540;">
+            <h2 style="color: #4a148c;">🧠 Mental Health Support</h2>
+            <p style="font-size: 13px; color: #555;">Resources from <b>APA</b> and <b>Tulane</b> to help manage stress.</p>
+            <div style="display: flex; gap: 10px;">
+                <a href="https://www.apa.org/topics/disasters-response/hurricane-stress" target="_blank" class="nav-btn" style="background-color: #2e7d32; color: #ffffff; border: none; font-size: 12px; flex: 1; font-weight: bold;">APA Stress Guide</a>
+                <a href="https://news.tulane.edu/pr/mental-health-experts-offer-coping-tips-well-being-after-storms-and-other-disasters" target="_blank" class="nav-btn" style="background-color: #2e7d32; color: #ffffff; border: none; font-size: 12px; flex: 1; font-weight: bold;">Tulane Resilience</a>
+            </div>
+            <div style="margin-top: 15px; background: #7b1fa2; color: white; padding: 12px; border-radius: 8px; text-align: center;">
+                <small>Need to talk? <b>Call or Text 988</b> (24/7 Crisis Support)</small>
+            </div>
+        </div>
 
-    <div style="margin-top: 15px; background: #7b1fa2; color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold;">
-        <small>Need to talk? <b>Call or Text 988</b> (24/7 Crisis Support)</small>
-    </div>
-</div>
+        <div class="card" style="border-top-color: #455a64; text-align: center;">
+            <h2 style="color: #37474f;">🛰️ More Shelter Details</h2>
+            <p style="font-size: 13px; color: #666;">View user reviews and detailed facility info on our companion app.</p>
+            <a href="https://stormsafe-hurricane-shelter-finder-581021306710.us-west1.run.app/" target="_blank" class="nav-btn" style="background: #455a64; color: white; border: none;">
+                Open Shelter App (Reviews & More)
+            </a>
+        </div>
 
     </div> </div> <script>
     function filterTable() {
@@ -120,17 +116,6 @@
         document.querySelectorAll('#tableBody tr').forEach(r => {
             r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
         });
-    }
-        function shareSite() {
-        if (navigator.share) {
-            navigator.share({
-                title: 'Florida Hurricane Relief Hub',
-                text: 'Check out this shelter finder and emergency guide for our neighborhood.',
-                url: window.location.href
-            }).catch(console.error);
-        } else {
-            alert("Copy this URL to share: " + window.location.href);
-        }
     }
 </script>
 </body>
