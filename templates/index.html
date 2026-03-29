@@ -111,17 +111,38 @@
         </div>
     </div>
 
-    <div class="card" style="border-top-color: #7b1fa2; background:#f3e5f540;">
-        <h2>🧠 Mental Health Resources</h2>
-        <p style="font-size:13px;">Trauma from storms is real. These resources from APA and Tulane provide scientifically-backed coping methods.</p>
-        <div style="display:flex; gap:10px;">
-            <a href="https://www.apa.org/topics/disasters-response/hurricane-stress" target="_blank" class="nav-btn" style="background:#7b1fa2; font-size:12px;">APA Guide</a>
-            <a href="https://news.tulane.edu/pr/mental-health-experts-offer-coping-tips-well-being-after-storms-and-other-disasters" target="_blank" class="nav-btn" style="background:#9c27b0; font-size:12px;">Tulane Tips</a>
+<div class="card" style="border-top-color: #00897b; background: #e0f2f150;">
+            <h2 style="color: #00695c;">🤝 Community: Help Your Neighbor</h2>
+            <p style="font-size: 14px; color: #333;">Recovery is faster when we look out for each other. Use this checklist to support your street:</p>
+            <ul style="font-size: 13px; line-height: 1.6; color: #444;">
+                <li><b>Elderly/Disabled:</b> Check on neighbors who live alone or have mobility issues.</li>
+                <li><b>Debris:</b> Help clear storm drains to prevent localized street flooding.</li>
+                <li><b>Resources:</b> If you have extra water or a working chainsaw, offer a hand.</li>
+            </ul>
+            <a href="https://www.ready.gov/neighbors" target="_blank" class="nav-btn" style="background: #00897b; color: white; border: none;">Learn to Build a Neighbor Network</a>
         </div>
-    </div>
-</div>
 
-<script>
+        <div id="mental-health-section" class="card" style="border-top-color: #7b1fa2; background: #f3e5f540;">
+            <h2 style="color: #4a148c;">🧠 Mental Health & Stress Support</h2>
+            <p style="font-size: 13px; color: #555;">Resources from <b>APA</b> and <b>Tulane</b> to help manage disaster-related trauma.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                <a href="https://www.apa.org/topics/disasters-response/hurricane-stress" target="_blank" class="nav-btn" style="border-color:#7b1fa2; color:#7b1fa2; font-size: 11px;">APA Coping Guide</a>
+                <a href="https://news.tulane.edu/pr/mental-health-experts-offer-coping-tips-well-being-after-storms-and-other-disasters" target="_blank" class="nav-btn" style="border-color:#7b1fa2; color:#7b1fa2; font-size: 11px;">Tulane Resilience</a>
+            </div>
+            <div style="margin-top: 15px; background: #7b1fa2; color: white; padding: 12px; border-radius: 8px; text-align: center;">
+                <small>Need to talk? <b>Call or Text 988</b> (24/7 Crisis Support)</small>
+            </div>
+        </div>
+
+        <div class="card" style="border-top-color: #455a64; text-align: center;">
+            <h2 style="color: #37474f;">🌐 Additional Interactive Tools</h2>
+            <p style="font-size: 13px; color: #666;">For a full interactive map experience with real-time routing, visit the StormSafe App.</p>
+            <a href="https://stormsafe-hurricane-shelter-finder-581021306710.us-west1.run.app/" target="_blank" class="nav-btn" style="background: #455a64; color: white; border: none;">
+                Launch StormSafe Shelter Finder (External)
+            </a>
+        </div>
+
+    </div> </div> <script>
     function filterTable() {
         let q = document.getElementById('searchInput').value.toLowerCase();
         document.querySelectorAll('#tableBody tr').forEach(r => {
