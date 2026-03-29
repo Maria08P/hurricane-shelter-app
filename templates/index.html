@@ -118,6 +118,17 @@
             r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
         });
     }
+        function shareSite() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Florida Hurricane Relief Hub',
+                text: 'Check out this shelter finder and emergency guide for our neighborhood.',
+                url: window.location.href
+            }).catch(console.error);
+        } else {
+            alert("Copy this URL to share: " + window.location.href);
+        }
+    }
 </script>
 </body>
 </html>
